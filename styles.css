@@ -1,7 +1,7 @@
 body{
-font-family: "Inter", sans-serif;
+font-family: "Inter", system-ui, -apple-system, sans-serif;
 margin:0;
-background:#ffffff;
+background:white;
 color:#222;
 line-height:1.6;
 }
@@ -10,7 +10,7 @@ line-height:1.6;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:24px 60px;
+padding:28px 60px;
 font-size:14px;
 }
 
@@ -34,25 +34,32 @@ padding:80px 20px 40px 20px;
 max-width:900px;
 width:100%;
 display:block;
-margin:0 auto 40px auto;
+margin:0 auto 50px auto;
 }
 
 h1{
-font-size:44px;
+font-size:42px;
 font-weight:500;
 margin:0;
+letter-spacing:-0.5px;
 }
 
 .subtitle{
 font-size:20px;
 margin-top:10px;
-color:#444;
+margin-bottom:30px;
+color:#555;
 }
 
-.affiliation{
-margin-top:6px;
-font-size:16px;
-color:#666;
+.intro{
+max-width:680px;
+margin:0 auto;
+font-size:18px;
+color:#333;
+}
+
+.intro p{
+margin-bottom:20px;
 }
 
 .section{
