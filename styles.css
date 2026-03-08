@@ -154,3 +154,42 @@ text-decoration:underline;
     grid-template-columns: 1fr;
   }
 }
+.pub-feed{
+max-width:760px;
+margin:36px auto 0 auto;
+}
+
+.pub-loading{
+text-align:center;
+color:#666;
+}
+
+.pub-card{
+padding:20px 0;
+border-top:1px solid #ececec;
+}
+
+.pub-card:last-child{
+border-bottom:1px solid #ececec;
+}
+
+.pub-title{
+margin:0 0 6px 0;
+font-size:18px;
+line-height:1.5;
+}
+
+.pub-title a{
+color:#222;
+text-decoration:none;
+}
+
+.pub-title a:hover{
+text-decoration:underline;
+}
+
+.pub-meta{
+margin:0;
+font-size:15px;
+color:#666;
+}
