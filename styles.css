@@ -8,12 +8,24 @@ body {
 
 /* NAVIGATION */
 
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 28px 60px;
-  font-size: 14px;
+.nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:22px 60px;
+
+  background:#ffffff;
+  border-bottom:1px solid #f0f0f0;
+
+  font-size:14px;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 .nav-left a {
@@ -91,7 +103,7 @@ body {
   left:0;
   width:42px;
   height:2px;
-  background:#4f3b78;
+  background:#6c5aa0;
 }
 
 /* PEOPLE */
