@@ -193,3 +193,82 @@ margin:0;
 font-size:15px;
 color:#666;
 }
+
+.pub-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 28px 0 32px;
+  flex-wrap: wrap;
+}
+
+.pub-tab {
+  appearance: none;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #333;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pub-tab:hover {
+  border-color: #bdbdbd;
+}
+
+.pub-tab.active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
+
+.pub-panel {
+  display: none;
+}
+
+.pub-panel.active {
+  display: block;
+}
+
+.pub-feed {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.pub-loading {
+  text-align: center;
+  color: #666;
+}
+
+.pub-card {
+  padding: 20px 0;
+  border-top: 1px solid #ececec;
+}
+
+.pub-card:last-child {
+  border-bottom: 1px solid #ececec;
+}
+
+.pub-title {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.pub-title a {
+  color: #222;
+  text-decoration: none;
+}
+
+.pub-title a:hover {
+  text-decoration: underline;
+}
+
+.pub-meta {
+  margin: 0;
+  font-size: 15px;
+  color: #666;
+}
