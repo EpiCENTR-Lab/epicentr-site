@@ -80,3 +80,30 @@ footer {
   font-size: 14px;
   color: #777777;
 }
+
+.contact-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:80px;
+max-width:700px;
+margin:40px auto 0 auto;
+}
+
+.contact-left,
+.contact-right{
+font-size:17px;
+}
+
+.contact-left p,
+.contact-right p{
+margin-bottom:22px;
+}
+
+.contact-right a{
+text-decoration:none;
+color:#333;
+}
+
+.contact-right a:hover{
+text-decoration:underline;
+}
