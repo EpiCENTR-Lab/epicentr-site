@@ -107,3 +107,50 @@ color:#333;
 .contact-right a:hover{
 text-decoration:underline;
 }
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 42px 28px;
+  max-width: 900px;
+  margin: 40px auto 0;
+}
+
+.person-card {
+  text-align: center;
+}
+
+.person-photo {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.person-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 17px;
+  color: #222;
+}
+
+.person-role {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: #666;
+}
+
+@media (max-width: 900px) {
+  .people-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .people-grid {
+    grid-template-columns: 1fr;
+  }
+}
