@@ -124,22 +124,6 @@
   const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])';
   const reviewQuery = authorQuery + ' AND (Review[pt] OR Comment[pt] OR Editorial[pt])';
 
-  function toSentenceCase(text) {
-    if (!text) return "";
-    const s = text.trim();
-    if (!s) return "";
-    return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-  }
-
-  function toTitleCase(text) {
-    if (!text) return "";
-    return text
-      .toLowerCase()
-      .split(" ")
-      .map(function (word) {
-        return word ? word.charAt(0).toUpperCase() + word.slice(1) : word;
-      })
-      .join(" ");
   }
 
   function getYear(article) {
@@ -155,25 +139,25 @@
     }
 
     feedEl.innerHTML = articles.map(function (article) {
-      const title = toSentenceCase(article.title || "");
-      const journal = toTitleCase(article.fulljournalname || article.source || "");
+      const title = article.title || "";
+      const journal = article.fulljournalname || article.source || "";
       const year = getYear(article);
       const pmid = article.uid;
       const link = "https://pubmed.ncbi.nlm.nih.gov/" + pmid + "/";
 
       return `
-        <article class="pub-card">
-          <div class="pub-row">
-            <div class="pub-text">
-              <p class="pub-title">
-                <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
-              </p>
-              <p class="pub-journal">${journal}</p>
-            </div>
-            <div class="pub-year">${year}</div>
-          </div>
-        </article>
-      `;
+  <article class="pub-card">
+    <div class="pub-row">
+      <div class="pub-text">
+        <p class="pub-title">
+          <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
+        </p>
+        <p class="pub-journal">${journal}</p>
+      </div>
+      <div class="pub-year">${year}</div>
+    </div>
+  </article>
+`;
     }).join("");
   }
 
