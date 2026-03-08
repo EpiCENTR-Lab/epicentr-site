@@ -133,35 +133,6 @@ function toTitleCase(text) {
     .map(word => word ? word.charAt(0).toUpperCase() + word.slice(1) : word)
     .join(" ");
 }
-
-function formatPubDate(pubdate) {
-  if (!pubdate) return "";
-
-  const months = {
-    jan: "Jan",
-    feb: "Feb",
-    mar: "Mar",
-    apr: "April",
-    may: "May",
-    jun: "June",
-    jul: "July",
-    aug: "Aug",
-    sep: "Sept",
-    oct: "Oct",
-    nov: "Nov",
-    dec: "Dec"
-  };
-
-  const parts = pubdate.trim().split(/\s+/);
-
-  if (parts.length >= 2) {
-    const monthKey = parts[0].slice(0, 3).toLowerCase();
-    const year = parts.find(p => /\d{4}/.test(p));
-    if (months[monthKey] && year) {
-      return `${months[monthKey]} ${year}`;
-    }
-  }
-
   const yearMatch = pubdate.match(/\d{4}/);
   return yearMatch ? yearMatch[0] : pubdate;
 }
@@ -175,18 +146,37 @@ function renderArticles(container, articles) {
   container.innerHTML = articles.map(article => {
     const title = toSentenceCase(article.title || "");
     const journal = toTitleCase(article.fulljournalname || article.source || "");
-    const date = formatPubDate(article.pubdate || "");
+    const date = (article.pubdate || "").match(/\d{4}/)?.[0] || "";
     const pmid = article.uid;
     const link = `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
 
     return `
-      <article class="pub-card">
+  <article class="pub-card">
+
+    <div class="pub-row">
+
+      <div class="pub-text">
+
         <p class="pub-title">
-          <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
+          <a href="${link}" target="_blank" rel="noopener noreferrer">
+            ${title}
+          </a>
         </p>
-        <p class="pub-meta">${journal}${date ? " · " + date : ""}</p>
-      </article>
-    `;
+
+        <p class="pub-journal">
+          ${journal}
+        </p>
+
+      </div>
+
+      <div class="pub-year">
+        ${date}
+      </div>
+
+    </div>
+
+  </article>
+`;
   }).join("");
 }
 
