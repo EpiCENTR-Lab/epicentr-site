@@ -97,83 +97,113 @@
 
   <h2>Latest Publications</h2>
 
-  <div id="pubmed-feed" class="pub-feed">
-    <p class="pub-loading">Loading publications…</p>
+  <div class="pub-tabs">
+    <button class="pub-tab active" data-tab="research">Original Research</button>
+    <button class="pub-tab" data-tab="reviews">Reviews & Commentaries</button>
+  </div>
+
+  <div id="pubmed-research" class="pub-panel active">
+    <div class="pub-feed">
+      <p class="pub-loading">Loading publications…</p>
+    </div>
+  </div>
+
+  <div id="pubmed-reviews" class="pub-panel">
+    <div class="pub-feed">
+      <p class="pub-loading">Loading publications…</p>
+    </div>
   </div>
 
 </section>
 
 <script>
-async function loadPubMedFeed() {
-  const container = document.getElementById("pubmed-feed");
+function toSentenceCase(text) {
+  if (!text) return "";
+  const clean = text.trim();
+  if (!clean) return "";
+  const lower = clean.toLowerCase();
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
 
-  const query = '(Hynds, Robert E.[author] OR Hynds, Rob E.[author])';
+function toTitleCase(text) {
+  if (!text) return "";
+  return text
+    .toLowerCase()
+    .split(" ")
+    .map(word => word ? word.charAt(0).toUpperCase() + word.slice(1) : word)
+    .join(" ");
+}
+
+function formatPubDate(pubdate) {
+  if (!pubdate) return "";
+
+  const months = {
+    jan: "Jan",
+    feb: "Feb",
+    mar: "Mar",
+    apr: "April",
+    may: "May",
+    jun: "June",
+    jul: "July",
+    aug: "Aug",
+    sep: "Sept",
+    oct: "Oct",
+    nov: "Nov",
+    dec: "Dec"
+  };
+
+  const parts = pubdate.trim().split(/\s+/);
+
+  if (parts.length >= 2) {
+    const monthKey = parts[0].slice(0, 3).toLowerCase();
+    const year = parts.find(p => /\d{4}/.test(p));
+    if (months[monthKey] && year) {
+      return `${months[monthKey]} ${year}`;
+    }
+  }
+
+  const yearMatch = pubdate.match(/\d{4}/);
+  return yearMatch ? yearMatch[0] : pubdate;
+}
+
+function renderArticles(container, articles) {
+  if (!articles.length) {
+    container.innerHTML = "<p>No publications found.</p>";
+    return;
+  }
+
+  container.innerHTML = articles.map(article => {
+    const title = toSentenceCase(article.title || "");
+    const journal = toTitleCase(article.fulljournalname || article.source || "");
+    const date = formatPubDate(article.pubdate || "");
+    const pmid = article.uid;
+    const link = `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
+
+    return `
+      <article class="pub-card">
+        <p class="pub-title">
+          <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
+        </p>
+        <p class="pub-meta">${journal}${date ? " · " + date : ""}</p>
+      </article>
+    `;
+  }).join("");
+}
+
+async function loadPubMedFeed(query, panelId) {
+  const panel = document.querySelector(`#${panelId} .pub-feed`);
   const encodedQuery = encodeURIComponent(query);
 
   const searchURL =
     `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&sort=pub+date&retmax=6&term=${encodedQuery}`;
 
-  function toSentenceCase(text) {
-    if (!text) return "";
-    const clean = text.trim();
-    if (!clean) return "";
-
-    const lower = clean.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  }
-
-  function toTitleCase(text) {
-    if (!text) return "";
-    return text
-      .toLowerCase()
-      .split(" ")
-      .map(word => {
-        if (!word) return word;
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(" ");
-  }
-
-  function formatPubDate(pubdate) {
-    if (!pubdate) return "";
-
-    const months = {
-      jan: "Jan",
-      feb: "Feb",
-      mar: "Mar",
-      apr: "April",
-      may: "May",
-      jun: "June",
-      jul: "July",
-      aug: "Aug",
-      sep: "Sept",
-      oct: "Oct",
-      nov: "Nov",
-      dec: "Dec"
-    };
-
-    const parts = pubdate.trim().split(/\s+/);
-
-    if (parts.length >= 2) {
-      const monthKey = parts[0].slice(0, 3).toLowerCase();
-      const year = parts[1].match(/\d{4}/) ? parts[1] : parts.find(p => /\d{4}/.test(p));
-      if (months[monthKey] && year) {
-        return `${months[monthKey]} ${year}`;
-      }
-    }
-
-    const yearMatch = pubdate.match(/\d{4}/);
-    return yearMatch ? yearMatch[0] : pubdate;
-  }
-
   try {
     const searchResponse = await fetch(searchURL);
     const searchData = await searchResponse.json();
-
-    const ids = searchData.esearchresult.idlist;
+    const ids = searchData.esearchresult.idlist || [];
 
     if (!ids.length) {
-      container.innerHTML = "<p>No publications found.</p>";
+      panel.innerHTML = "<p>No publications found.</p>";
       return;
     }
 
@@ -184,36 +214,34 @@ async function loadPubMedFeed() {
     const summaryData = await summaryResponse.json();
 
     const articles = ids.map(id => summaryData.result[id]).filter(Boolean);
-
-    container.innerHTML = articles.map(article => {
-      const title = toSentenceCase(article.title || "");
-      const journal = toTitleCase(article.fulljournalname || "");
-      const date = formatPubDate(article.pubdate || "");
-      const pmid = article.uid;
-      const link = `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
-
-      return `
-        <article class="pub-card">
-          <p class="pub-title">
-            <a href="${link}" target="_blank" rel="noopener noreferrer">
-              ${title}
-            </a>
-          </p>
-          <p class="pub-meta">
-            ${journal}${date ? " · " + date : ""}
-          </p>
-        </article>
-      `;
-    }).join("");
+    renderArticles(panel, articles);
 
   } catch (error) {
-    container.innerHTML = "<p>Unable to load publications.</p>";
+    panel.innerHTML = "<p>Unable to load publications.</p>";
     console.error(error);
   }
 }
 
-loadPubMedFeed();
-  
+const authorQuery = '(Hynds, Robert E.[author] OR Hynds, Rob E.[author])';
+
+const researchQuery =
+  `${authorQuery} NOT (Review[pt] OR Comment[pt] OR Editorial[pt])`;
+
+const reviewQuery =
+  `${authorQuery} AND (Review[pt] OR Comment[pt] OR Editorial[pt])`;
+
+loadPubMedFeed(researchQuery, "pubmed-research");
+loadPubMedFeed(reviewQuery, "pubmed-reviews");
+
+document.querySelectorAll(".pub-tab").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".pub-tab").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".pub-panel").forEach(panel => panel.classList.remove("active"));
+
+    button.classList.add("active");
+    document.getElementById(`pubmed-${button.dataset.tab}`).classList.add("active");
+  });
+});
 </script>
 
 <section id="contact" class="section">
