@@ -163,110 +163,71 @@ text-decoration:underline;
   }
 }
 
-.pub-tabs{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  margin:30px 0 34px 0;
-  flex-wrap:wrap;
-}
-
-.pub-tab{
-  appearance:none;
-  border:1px solid #d9d9d9;
-  background:#ffffff;
-  color:#333;
-  padding:9px 18px;
-  border-radius:999px;
-  font-family:inherit;
-  font-size:15px;
-  cursor:pointer;
-  transition:all 0.2s ease;
-}
-
-.pub-tab:hover{
-  border-color:#bdbdbd;
-}
-
-.pub-tab.active{
-  background:#222;
-  color:#fff;
-  border-color:#222;
-}
-
-.pub-panel{
-  display:none;
-}
-
-.pub-panel.active{
-  display:block;
-}
-
 .pub-feed{
-  max-width:760px;
-  margin:0 auto;
-}
-
-.pub-loading{
-  text-align:center;
-  color:#666;
+  max-width: 820px;
+  margin: 0 auto;
 }
 
 .pub-card{
-  padding:22px 0;
-  border-top:1px solid #ececec;
+  padding: 24px 0;
+  border-top: 1px solid #ececec;
 }
 
 .pub-card:last-child{
-  border-bottom:1px solid #ececec;
+  border-bottom: 1px solid #ececec;
 }
 
 .pub-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;   /* moves year to bottom right */
+  gap: 24px;
 }
 
 .pub-text{
-  max-width:640px;
+  flex: 1;
+  min-width: 0;
 }
 
 .pub-title{
-  margin:0 0 6px 0;
-  font-size:18px;
-  line-height:1.5;
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  line-height: 1.55;
 }
 
 .pub-title a{
-  color:#4f3b78;
-  text-decoration:none;
+  color: #4f3b78;
+  text-decoration: none;
 }
 
 .pub-title a:hover{
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 .pub-journal{
-  margin:0;
-  font-size:15px;
-  color:#3f8f8c;
+  margin: 0;
+  font-size: 15px;
+  color: #3f8f8c;
+  line-height: 1.4;
 }
 
 .pub-year{
-  font-size:15px;
-  color:#3f8f8c;
-  white-space:nowrap;
-  margin-top:2px;
+  font-size: 15px;
+  color: #3f8f8c;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-left: 12px;
 }
 
-@media (max-width:650px){
+@media (max-width: 650px){
   .pub-row{
-    flex-direction:column;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .pub-year{
-    margin-top:6px;
+    padding-left: 0;
+    margin-top: 8px;
   }
 }
 
