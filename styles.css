@@ -106,13 +106,13 @@ html{
   background:#6c5aa0;
 }
 
-.section a {
+.section p a {
   color: #3f8f8c;
   text-decoration: none;
   border-bottom: 1px solid rgba(63, 143, 140, 0.4);
 }
 
-.section a:hover {
+.section p a:hover {
   border-bottom-color: #3f8f8c;
 }
 
