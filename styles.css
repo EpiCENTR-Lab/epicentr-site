@@ -368,13 +368,13 @@ html{
 .pub-journal {
   margin: 0;
   font-size: 15px;
-  color: #3f8f8c;
+  color: #4f3b78;
   line-height: 1.4;
 }
 
 .pub-year {
   font-size: 15px;
-  color: #3f8f8c;
+  color: #4f3b78;
   white-space: nowrap;
   flex-shrink: 0;
   padding-left: 12px;
