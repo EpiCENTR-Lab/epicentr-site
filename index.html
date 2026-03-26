@@ -329,7 +329,7 @@
       "journal of cell science": "Journal of Cell Science",
       "open biology": "Open Biology",
       "science translational medicine": "Science Translational Medicine",
-      "American journal of physiology. Lung cellular and molecular physiology": "American Journal of Physiology (Lung Cellular and Molecular Physiology)",
+      "american journal of physiology. lung cellular and molecular physiology": "American Journal of Physiology (Lung Cellular and Molecular Physiology)",
       "frontiers in pharmacology": "Frontiers in Pharmacology",
       "american journal of respiratory cell and molecular biology": "American Journal of Respiratory Cell and Molecular Biology",
       "biology open": "Biology Open",
@@ -465,7 +465,7 @@
         term: query,
         tool: "epicentr_site",
         email: "rob.hynds@ucl.ac.uk"
-        // api_key: "YOUR_NCBI_API_KEY"
+        api_key: "790a0ffc975d30c98459f1bcc01bccddc409"
       });
 
       const searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + searchParams.toString();
@@ -481,7 +481,7 @@
       }
 
       // small pause to avoid bursting requests
-      await delay(400);
+      await delay(200);
 
       const fetchParams = new URLSearchParams({
         db: "pubmed",
@@ -489,7 +489,7 @@
         retmode: "xml",
         tool: "epicentr_site",
         email: "rob.hynds@ucl.ac.uk"
-        // api_key: "YOUR_NCBI_API_KEY"
+        api_key: "790a0ffc975d30c98459f1bcc01bccddc409"
       });
 
       const fetchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?" + fetchParams.toString();
