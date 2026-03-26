@@ -293,6 +293,14 @@
   const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])';
   const reviewQuery = authorQuery + ' AND (Review[pt] OR Comment[pt] OR Editorial[pt])';
 
+  const panelQueries = {
+    "pubmed-research": researchQuery,
+    "pubmed-reviews": reviewQuery
+  };
+
+  const loadedPanels = new Set();
+  const pendingPanels = new Map();
+
   function firstTextByTag(parent, tagName) {
     const els = parent.getElementsByTagName(tagName);
     return els.length ? els[0].textContent.trim() : "";
@@ -320,12 +328,15 @@
       "the new england journal of medicine": "New England Journal of Medicine",
       "journal of cell science": "Journal of Cell Science",
       "open biology": "Open Biology",
-      "erj open research": "ERJ Open Research",
-      "erj open research": "ERJ Open Research",
-      "erj open research": "ERJ Open Research",
-      "erj open research": "ERJ Open Research",
-      "erj open research": "ERJ Open Research",
-      
+      "science translational medicine": "Science Translational Medicine",
+      "American journal of physiology. Lung cellular and molecular physiology": "American Journal of Physiology (Lung Cellular and Molecular Physiology)",
+      "frontiers in pharmacology": "Frontiers in Pharmacology",
+      "american journal of respiratory cell and molecular biology": "American Journal of Respiratory Cell and Molecular Biology",
+      "biology open": "Biology Open",
+      "cytotherapy": "Cytotherapy",
+      "science advances": "Science Advances",
+      "european respiratory journal": "European Respiratory Journal",
+      "nature communications": "Nature Communications",
     };
 
     return overrides[lower] || key;
@@ -411,33 +422,66 @@
     }).join("");
   }
 
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function fetchWithRetry(url, options, retries) {
+    let lastError;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Request failed: " + response.status);
+        }
+        return response;
+      } catch (err) {
+        lastError = err;
+        if (attempt < retries) {
+          await delay(700 * (attempt + 1));
+        }
+      }
+    }
+
+    throw lastError;
+  }
+
   async function loadPubMedFeed(query, panelId) {
+    if (loadedPanels.has(panelId)) return;
+    if (pendingPanels.has(panelId)) return pendingPanels.get(panelId);
+
     const feedEl = document.querySelector("#" + panelId + " .pub-feed");
     if (!feedEl) return;
 
-    const searchParams = new URLSearchParams({
-      db: "pubmed",
-      retmode: "json",
-      sort: "pub date",
-      retmax: "6",
-      term: query,
-      tool: "epicentr_site",
-      email: "rob.hynds@ucl.ac.uk"
-    });
+    feedEl.innerHTML = "<p>Loading publications...</p>";
 
-    const searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + searchParams.toString();
+    const loadPromise = (async function () {
+      const searchParams = new URLSearchParams({
+        db: "pubmed",
+        retmode: "json",
+        sort: "pub date",
+        retmax: "6",
+        term: query,
+        tool: "epicentr_site",
+        email: "rob.hynds@ucl.ac.uk"
+        // api_key: "YOUR_NCBI_API_KEY"
+      });
 
-    try {
-      const searchResponse = await fetch(searchUrl);
-      if (!searchResponse.ok) throw new Error("Search request failed: " + searchResponse.status);
+      const searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + searchParams.toString();
 
+      const searchResponse = await fetchWithRetry(searchUrl, {}, 2);
       const searchData = await searchResponse.json();
       const ids = searchData?.esearchresult?.idlist || [];
 
       if (!ids.length) {
         feedEl.innerHTML = "<p>No publications found.</p>";
+        loadedPanels.add(panelId);
         return;
       }
+
+      // small pause to avoid bursting requests
+      await delay(400);
 
       const fetchParams = new URLSearchParams({
         db: "pubmed",
@@ -445,13 +489,12 @@
         retmode: "xml",
         tool: "epicentr_site",
         email: "rob.hynds@ucl.ac.uk"
+        // api_key: "YOUR_NCBI_API_KEY"
       });
 
       const fetchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?" + fetchParams.toString();
 
-      const fetchResponse = await fetch(fetchUrl);
-      if (!fetchResponse.ok) throw new Error("EFetch request failed: " + fetchResponse.status);
-
+      const fetchResponse = await fetchWithRetry(fetchUrl, {}, 2);
       const xmlText = await fetchResponse.text();
       const articles = parsePubmedXml(xmlText);
 
@@ -459,32 +502,55 @@
       const orderedArticles = ids.map(id => articleMap.get(id)).filter(Boolean);
 
       renderArticles(feedEl, orderedArticles);
+      loadedPanels.add(panelId);
+    })();
+
+    pendingPanels.set(panelId, loadPromise);
+
+    try {
+      await loadPromise;
     } catch (err) {
       console.error("PubMed feed error:", err);
       feedEl.innerHTML = "<p>Unable to retrieve publications.</p>";
+    } finally {
+      pendingPanels.delete(panelId);
+    }
+  }
+
+  function activateTab(tabName) {
+    document.querySelectorAll(".pub-tab").forEach(function (b) {
+      b.classList.remove("active");
+    });
+
+    document.querySelectorAll(".pub-panel").forEach(function (panel) {
+      panel.classList.remove("active");
+    });
+
+    const button = document.querySelector('.pub-tab[data-tab="' + tabName + '"]');
+    const panel = document.getElementById("pubmed-" + tabName);
+
+    if (button) button.classList.add("active");
+    if (panel) panel.classList.add("active");
+
+    const panelId = "pubmed-" + tabName;
+    const query = panelQueries[panelId];
+    if (query) {
+      loadPubMedFeed(query, panelId);
     }
   }
 
   document.querySelectorAll(".pub-tab").forEach(function (button) {
     button.addEventListener("click", function () {
-      document.querySelectorAll(".pub-tab").forEach(function (b) {
-        b.classList.remove("active");
-      });
-
-      document.querySelectorAll(".pub-panel").forEach(function (panel) {
-        panel.classList.remove("active");
-      });
-
-      button.classList.add("active");
-      const panel = document.getElementById("pubmed-" + button.dataset.tab);
-      if (panel) panel.classList.add("active");
+      activateTab(button.dataset.tab);
     });
   });
 
-  loadPubMedFeed(researchQuery, "pubmed-research");
-  loadPubMedFeed(reviewQuery, "pubmed-reviews");
+  // Load only the default active tab on page load
+  const activeButton = document.querySelector(".pub-tab.active");
+  const defaultTab = activeButton ? activeButton.dataset.tab : "research";
+  activateTab(defaultTab);
 })();
 </script>
-
+  
 </body>
 </html>
