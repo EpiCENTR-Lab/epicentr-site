@@ -293,46 +293,9 @@
   const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])';
   const reviewQuery = authorQuery + ' AND (Review[pt] OR Comment[pt] OR Editorial[pt])';
 
-  function textContent(node, selector) {
-    const el = selector ? node.querySelector(selector) : node;
-    return el ? el.textContent.trim() : "";
-  }
-
-  function getYear(articleNode) {
-    const year =
-      textContent(articleNode, 'PubDate > Year') ||
-      textContent(articleNode, 'ArticleDate[DateType="Electronic"] > Year') ||
-      textContent(articleNode, 'PubMedPubDate[PubStatus="pubmed"] > Year') ||
-      textContent(articleNode, 'PubMedPubDate[PubStatus="entrez"] > Year');
-
-    return year || "";
-  }
-
-  function parseArticles(xmlDoc) {
-    return Array.from(xmlDoc.querySelectorAll("PubmedArticle")).map(function (articleNode) {
-      const pmid = textContent(articleNode, "PMID");
-
-      // Preserve PubMed's own title text exactly; do not recase it in JS.
-      const title =
-        textContent(articleNode, "Article > ArticleTitle") ||
-        textContent(articleNode, "BookDocument > ArticleTitle") ||
-        "";
-
-      // Prefer the full journal title from the article record.
-      // Fall back to MEDLINE title abbreviation if needed.
-      const journal =
-        textContent(articleNode, "Article > Journal > Title") ||
-        textContent(articleNode, "MedlineJournalInfo > MedlineTA") ||
-        textContent(articleNode, "Article > Journal > ISOAbbreviation") ||
-        "";
-
-      return {
-        uid: pmid,
-        title: title,
-        journal: journal,
-        year: getYear(articleNode)
-      };
-    });
+  function firstTextByTag(parent, tagName) {
+    const els = parent.getElementsByTagName(tagName);
+    return els.length ? els[0].textContent.trim() : "";
   }
 
   function escapeHtml(str) {
@@ -344,6 +307,76 @@
       .replace(/'/g, "&#39;");
   }
 
+  function getYear(articleNode) {
+    // Prefer Journal PubDate Year
+    const pubDateNodes = articleNode.getElementsByTagName("PubDate");
+    for (const pubDate of pubDateNodes) {
+      const year = firstTextByTag(pubDate, "Year");
+      if (year) return year;
+      const medlineDate = firstTextByTag(pubDate, "MedlineDate");
+      const match = medlineDate.match(/\b\d{4}\b/);
+      if (match) return match[0];
+    }
+
+    // Fall back to ArticleDate
+    const articleDateNodes = articleNode.getElementsByTagName("ArticleDate");
+    for (const articleDate of articleDateNodes) {
+      const year = firstTextByTag(articleDate, "Year");
+      if (year) return year;
+    }
+
+    return "";
+  }
+
+  function parsePubmedXml(xmlText) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+    if (xmlDoc.getElementsByTagName("parsererror").length) {
+      throw new Error("Invalid XML returned by PubMed");
+    }
+
+    const articleNodes = Array.from(xmlDoc.getElementsByTagName("PubmedArticle"));
+
+    return articleNodes.map(function (articleNode) {
+      const pmid = firstTextByTag(articleNode, "PMID");
+
+      // Keep PubMed's title text exactly as supplied
+      const articleTitleNodes = articleNode.getElementsByTagName("ArticleTitle");
+      const title = articleTitleNodes.length
+        ? articleTitleNodes[0].textContent.trim()
+        : "";
+
+      // Prefer the full journal title from the article record
+      let journal = "";
+      const journalNodes = articleNode.getElementsByTagName("Journal");
+      if (journalNodes.length) {
+        journal = firstTextByTag(journalNodes[0], "Title");
+      }
+
+      // Fallbacks
+      if (!journal) {
+        const medlineInfo = articleNode.getElementsByTagName("MedlineJournalInfo");
+        if (medlineInfo.length) {
+          journal = firstTextByTag(medlineInfo[0], "MedlineTA");
+        }
+      }
+      if (!journal) {
+        const iso = articleNode.getElementsByTagName("ISOAbbreviation");
+        if (iso.length) {
+          journal = iso[0].textContent.trim();
+        }
+      }
+
+      return {
+        uid: pmid,
+        title: title,
+        journal: journal,
+        year: getYear(articleNode)
+      };
+    });
+  }
+
   function renderArticles(feedEl, articles) {
     if (!articles.length) {
       feedEl.innerHTML = "<p>No publications found.</p>";
@@ -351,22 +384,18 @@
     }
 
     feedEl.innerHTML = articles.map(function (article) {
-      const title = article.title || "";
-      const journal = article.journal || "";
-      const year = article.year || "";
-      const pmid = article.uid;
-      const link = "https://pubmed.ncbi.nlm.nih.gov/" + pmid + "/";
+      const link = "https://pubmed.ncbi.nlm.nih.gov/" + article.uid + "/";
 
       return `
         <article class="pub-card">
           <div class="pub-row">
             <div class="pub-text">
               <p class="pub-title">
-                <a href="${link}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>
+                <a href="${link}" target="_blank" rel="noopener noreferrer">${escapeHtml(article.title || "")}</a>
               </p>
-              <p class="pub-journal">${escapeHtml(journal)}</p>
+              <p class="pub-journal">${escapeHtml(article.journal || "")}</p>
             </div>
-            <div class="pub-year">${escapeHtml(year)}</div>
+            <div class="pub-year">${escapeHtml(article.year || "")}</div>
           </div>
         </article>
       `;
@@ -387,14 +416,13 @@
       email: "rob.hynds@ucl.ac.uk"
     });
 
-    const searchUrl =
-      "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + searchParams.toString();
+    const searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + searchParams.toString();
 
     try {
       const searchResponse = await fetch(searchUrl);
-      if (!searchResponse.ok) throw new Error("Search request failed");
-      const searchData = await searchResponse.json();
+      if (!searchResponse.ok) throw new Error("Search request failed: " + searchResponse.status);
 
+      const searchData = await searchResponse.json();
       const ids = searchData?.esearchresult?.idlist || [];
 
       if (!ids.length) {
@@ -404,35 +432,28 @@
 
       const fetchParams = new URLSearchParams({
         db: "pubmed",
-        retmode: "xml",
         id: ids.join(","),
+        retmode: "xml",
         tool: "epicentr_site",
         email: "rob.hynds@ucl.ac.uk"
       });
 
-      const fetchUrl =
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?" + fetchParams.toString();
+      const fetchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?" + fetchParams.toString();
 
       const fetchResponse = await fetch(fetchUrl);
-      if (!fetchResponse.ok) throw new Error("Fetch request failed");
+      if (!fetchResponse.ok) throw new Error("EFetch request failed: " + fetchResponse.status);
 
       const xmlText = await fetchResponse.text();
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+      const articles = parsePubmedXml(xmlText);
 
-      const articles = parseArticles(xmlDoc);
-
-      // Keep PubMed search order
-      const orderedArticles = ids
-        .map(function (id) {
-          return articles.find(function (a) { return a.uid === id; });
-        })
-        .filter(Boolean);
+      // keep original PMID order from esearch
+      const articleMap = new Map(articles.map(a => [a.uid, a]));
+      const orderedArticles = ids.map(id => articleMap.get(id)).filter(Boolean);
 
       renderArticles(feedEl, orderedArticles);
     } catch (err) {
       console.error("PubMed feed error:", err);
-      feedEl.innerHTML = "<p>Unable to load publications.</p>";
+      feedEl.innerHTML = "<p>Unable to retrieve publications.</p>";
     }
   }
 
