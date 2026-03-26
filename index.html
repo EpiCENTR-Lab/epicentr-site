@@ -307,18 +307,41 @@
       .replace(/'/g, "&#39;");
   }
 
+  function normalizeJournalTitle(journal) {
+    if (!journal) return "";
+
+    const key = journal.trim();
+    const lower = key.toLowerCase();
+
+    const overrides = {
+      "erj open research": "ERJ Open Research",
+      "cancer cell": "Cancer Cell",
+      "nature genetics": "Nature Genetics",
+      "the new england journal of medicine": "New England Journal of Medicine",
+      "journal of cell science": "Journal of Cell Science",
+      "open biology": "Open Biology",
+      "erj open research": "ERJ Open Research",
+      "erj open research": "ERJ Open Research",
+      "erj open research": "ERJ Open Research",
+      "erj open research": "ERJ Open Research",
+      "erj open research": "ERJ Open Research",
+      
+    };
+
+    return overrides[lower] || key;
+  }
+
   function getYear(articleNode) {
-    // Prefer Journal PubDate Year
     const pubDateNodes = articleNode.getElementsByTagName("PubDate");
     for (const pubDate of pubDateNodes) {
       const year = firstTextByTag(pubDate, "Year");
       if (year) return year;
+
       const medlineDate = firstTextByTag(pubDate, "MedlineDate");
       const match = medlineDate.match(/\b\d{4}\b/);
       if (match) return match[0];
     }
 
-    // Fall back to ArticleDate
     const articleDateNodes = articleNode.getElementsByTagName("ArticleDate");
     for (const articleDate of articleDateNodes) {
       const year = firstTextByTag(articleDate, "Year");
@@ -341,32 +364,18 @@
     return articleNodes.map(function (articleNode) {
       const pmid = firstTextByTag(articleNode, "PMID");
 
-      // Keep PubMed's title text exactly as supplied
       const articleTitleNodes = articleNode.getElementsByTagName("ArticleTitle");
       const title = articleTitleNodes.length
         ? articleTitleNodes[0].textContent.trim()
         : "";
 
-      // Prefer the full journal title from the article record
       let journal = "";
       const journalNodes = articleNode.getElementsByTagName("Journal");
       if (journalNodes.length) {
-        journal = firstTextByTag(journalNodes[0], "ISOAbbreviation");
+        journal = firstTextByTag(journalNodes[0], "Title");
       }
 
-      // Fallbacks
-      if (!journal) {
-        const medlineInfo = articleNode.getElementsByTagName("MedlineJournalInfo");
-        if (medlineInfo.length) {
-          journal = firstTextByTag(medlineInfo[0], "MedlineTA");
-        }
-      }
-      if (!journal) {
-        const iso = articleNode.getElementsByTagName("ISOAbbreviation");
-        if (iso.length) {
-          journal = iso[0].textContent.trim();
-        }
-      }
+      journal = normalizeJournalTitle(journal);
 
       return {
         uid: pmid,
@@ -446,7 +455,6 @@
       const xmlText = await fetchResponse.text();
       const articles = parsePubmedXml(xmlText);
 
-      // keep original PMID order from esearch
       const articleMap = new Map(articles.map(a => [a.uid, a]));
       const orderedArticles = ids.map(id => articleMap.get(id)).filter(Boolean);
 
