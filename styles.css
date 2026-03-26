@@ -278,6 +278,19 @@ html{
   color: #666;
 }
 
+.person-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.person-link:visited,
+.person-link:hover,
+.person-link:active {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* PUBLICATIONS */
 
 .pub-tabs {
