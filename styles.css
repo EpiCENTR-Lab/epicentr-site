@@ -474,3 +474,47 @@ footer {
     margin: 0 12px;
   }
 }
+
+.resources-intro {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.resource-card {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.resource-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.resource-card p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.resource-link {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.resource-link:hover {
+  text-decoration: underline;
+}
