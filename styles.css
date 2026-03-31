@@ -106,17 +106,17 @@ html{
   background:#6c5aa0;
 }
 
-.section p a {
+/* RESEARCH */
+
+#research p a {
   color: #3f8f8c;
   text-decoration: none;
   border-bottom: 1px solid rgba(63, 143, 140, 0.4);
 }
 
-.section p a:hover {
+#research p a:hover {
   border-bottom-color: #3f8f8c;
 }
-
-/* RESEARCH */
 
 .research-grid {
   display: grid;
@@ -275,7 +275,7 @@ html{
 
 .alumni-role {
   font-size: 0.82rem;
-  color: #666;
+  color: #3f8f8c;
 }
 
 .person-link {
@@ -372,10 +372,11 @@ html{
 .pub-title a {
   color: #4f3b78;
   text-decoration: none;
+  border-bottom: 1px solid rgba(79, 59, 120, 0.4);
 }
 
 .pub-title a:hover {
-  text-decoration: underline;
+  border-bottom-color: #4f3b78;
 }
 
 .pub-journal {
@@ -416,10 +417,11 @@ html{
 #contact a {
   color: #4f3b78;
   text-decoration: none;
+  border-bottom: 1px solid rgba(79, 59, 120, 0.4);
 }
 
 #contact a:hover {
-  text-decoration: underline;
+  border-bottom-color: #4f3b78;
 }
 
 /* FOOTER */
@@ -511,10 +513,12 @@ footer {
 }
 
 .resource-link {
-  font-weight: 500;
+  color: #3f8f8c;
+  font-weight: 400;
   text-decoration: none;
+  border-bottom: 1px solid rgba(63, 143, 140, 0.4);
 }
 
 .resource-link:hover {
-  text-decoration: underline;
+  border-bottom-color: #3f8f8c;
 }
