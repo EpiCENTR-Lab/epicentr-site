@@ -250,12 +250,18 @@
   <h2>Latest Publications</h2>
 
   <div class="pub-tabs">
-    <button class="pub-tab active" data-tab="research" type="button">Original Research</button>
+    <button class="pub-tab active" data-tab="preprints" type="button">Preprints</button>
+    <button class="pub-tab" data-tab="research" type="button">Original Research</button>
     <button class="pub-tab" data-tab="reviews" type="button">Reviews &amp; Commentaries</button>
-    <button class="pub-tab" data-tab="preprints" type="button">Preprints</button>
   </div>
 
-  <div id="pubmed-research" class="pub-panel active">
+ <div id="pubmed-preprints" class="pub-panel active">
+    <div class="pub-feed" id="preprints-feed">
+      <p class="pub-loading">Loading preprints...</p>
+    </div>
+  </div>
+  
+  <div id="pubmed-research" class="pub-panel">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
@@ -264,12 +270,6 @@
   <div id="pubmed-reviews" class="pub-panel">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
-    </div>
-  </div>
-
-  <div id="pubmed-preprints" class="pub-panel">
-    <div class="pub-feed" id="preprints-feed">
-      <p class="pub-loading">Loading preprints...</p>
     </div>
   </div>
 </section>
@@ -344,9 +344,16 @@ async function fetchBioRxivPreprints() {
     const allPreprints = await fetchAllBioRxivPreprints("2023-01-01", "2026-12-31");
 
     const filtered = allPreprints.filter(item => {
-      const authors = (item.authors || "").toLowerCase();
-      return authors.includes("hynds");
-    });
+  const authors = (item.authors || "").toLowerCase();
+  const corresponding = (item.author_corresponding || "").toLowerCase();
+  const institution = (item.author_corresponding_institution || "").toLowerCase();
+
+  return (
+    authors.includes("hynds") ||
+    corresponding.includes("hynds") ||
+    institution.includes("university college london")
+  );
+});
 
     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
