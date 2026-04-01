@@ -255,7 +255,7 @@
     <button class="pub-tab active" data-panel="biorxiv-preprints" type="button">Preprints</button>
   </div>
 
-  <div id="pubmed-research" class="pub-panel active">
+  <div id="pubmed-research" class="pub-panel">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
@@ -267,7 +267,7 @@
     </div>
   </div>
 
-  <div id="biorxiv-preprints" class="pub-panel">
+  <div id="biorxiv-preprints" class="pub-panel active">
     <div class="pub-feed" id="preprints-feed">
       <p class="pub-loading">Loading preprints...</p>
     </div>
@@ -362,7 +362,7 @@ async function fetchBioRxivPreprints() {
 
     const filtered = allPreprints.filter(item => {
       const authors = (item.authors || "").toLowerCase();
-      return authors.includes("Hynds");
+      return authors.includes("hynds");
     });
 
     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
