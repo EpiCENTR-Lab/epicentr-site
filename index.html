@@ -249,13 +249,13 @@
 <section id="publications" class="section">
   <h2>Latest Publications</h2>
 
-  <div class="pub-tabs">
-    <button class="pub-tab" data-tab="preprints">Preprints</button>
-    <button class="pub-tab active" data-tab="research" type="button">Original Research</button>
-    <button class="pub-tab" data-tab="reviews" type="button">Reviews &amp; Commentaries</button>
-  </div>
+  <<div class="pub-tabs">
+  <button class="pub-tab active" data-tab="pubmed-preprints" type="button">Preprints</button>
+  <button class="pub-tab" data-tab="pubmed-research" type="button">Original Research</button>
+  <button class="pub-tab" data-tab="pubmed-reviews" type="button">Reviews &amp; Commentaries</button>
+</div>
 
-  <div class="pub-panel" id="preprints">
+  <div id="pubmed-preprints" class="pub-panel">
   <div class="pub-feed" id="preprints-feed">
     <p class="pub-loading">Loading preprints...</p>
   </div>
@@ -345,7 +345,7 @@ async function fetchBioRxivPreprints() {
 
     const filtered = allPreprints.filter(item => {
       const authors = (item.authors || "").toLowerCase();
-      return authors.includes("robert hynds");
+      return authors.includes("hynds");
     });
 
     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
