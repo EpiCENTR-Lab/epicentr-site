@@ -599,8 +599,8 @@ html{
   line-height: 1.35;
 }
 
-.gallery-photo-wrap:hover .gallery-overlay {
-  opacity: 1;
+.gallery-photo-wrap:hover .gallery-photo {
+  transform: scale(1.025);
 }
 
 /* CONTACT */
