@@ -250,11 +250,18 @@
   <h2>Latest Publications</h2>
 
   <div class="pub-tabs">
+    <button class="pub-tab" data-tab="preprints">Preprints</button>
     <button class="pub-tab active" data-tab="research" type="button">Original Research</button>
     <button class="pub-tab" data-tab="reviews" type="button">Reviews &amp; Commentaries</button>
   </div>
 
-  <div id="pubmed-research" class="pub-panel active">
+  <div class="pub-panel active" id="pub-panel-preprints">
+  <div class="pub-feed" id="preprints-feed">
+    <p class="pub-loading">Loading preprints...</p>
+  </div>
+</div>
+  
+  <div id="pubmed-research" class="pub-panel">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
@@ -266,6 +273,79 @@
     </div>
   </div>
 </section>
+
+  <script>
+async function fetchBioRxivPreprints() {
+  const container = document.getElementById("preprints-feed");
+  if (!container) return;
+
+  container.innerHTML = '<p class="pub-loading">Loading preprints...</p>';
+
+  try {
+    const startDate = "2024-01-01";
+    const endDate = "2026-12-31";
+
+    const response = await fetch(
+      `https://api.biorxiv.org/details/biorxiv/${startDate}/${endDate}/0/json`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch bioRxiv preprints");
+    }
+
+    const data = await response.json();
+    const allPreprints = data.collection || [];
+
+    const filtered = allPreprints.filter(item => {
+      const authors = (item.authors || "").toLowerCase();
+      const corresponding = (item.author_corresponding || "").toLowerCase();
+      const institution = (item.author_corresponding_institution || "").toLowerCase();
+
+      return (
+        authors.includes("robert hynds") ||
+        corresponding.includes("robert hynds") ||
+        institution.includes("ucl")
+      );
+    });
+
+    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (!filtered.length) {
+      container.innerHTML = "<p class='pub-loading'>No preprints found.</p>";
+      return;
+    }
+
+    container.innerHTML = filtered.map(item => {
+      const doiUrl = `https://www.biorxiv.org/content/${item.doi}v${item.version}`;
+      const year = new Date(item.date).getFullYear();
+
+      return `
+        <article class="pub-card">
+          <div class="pub-row">
+            <div class="pub-text">
+              <h3 class="pub-title">
+                <a href="${doiUrl}" target="_blank" rel="noopener noreferrer">
+                  ${item.title}
+                </a>
+              </h3>
+              <p class="pub-journal">bioRxiv</p>
+            </div>
+            <div class="pub-year">${year}</div>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+  } catch (error) {
+    container.innerHTML = "<p class='pub-loading'>Unable to load preprints.</p>";
+    console.error(error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchBioRxivPreprints();
+});
+</script>
 
   <script>
 (function () {
