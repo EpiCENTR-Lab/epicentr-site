@@ -357,7 +357,7 @@ async function fetchBioRxivPreprints() {
 
     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    renderPreprints(filtered);
+    renderPreprints(allPreprints.slice(0, 10));
   } catch (error) {
     console.error(error);
     container.innerHTML = `<p class="pub-loading">Unable to load preprints.</p>`;
