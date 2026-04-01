@@ -544,6 +544,17 @@ html{
   }
 }
 
+@media (max-width: 560px) {
+  .gallery-overlay {
+    opacity: 1;
+    padding: 0.85rem;
+  }
+
+  .gallery-overlay span {
+    font-size: 0.9rem;
+  }
+}
+
 /* GALLERY */
 
 .gallery-grid {
