@@ -250,12 +250,12 @@
   <h2>Latest Publications</h2>
 
   <div class="pub-tabs">
-    <button class="pub-tab" data-panel="pubmed-research" type="button">Original Research</button>
-    <button class="pub-tab" data-panel="pubmed-reviews" type="button">Reviews &amp; Commentaries</button>
-    <button class="pub-tab active" data-panel="biorxiv-preprints" type="button">Preprints</button>
+    <button class="pub-tab active" data-tab="research" type="button">Original Research</button>
+    <button class="pub-tab" data-tab="reviews" type="button">Reviews &amp; Commentaries</button>
+    <button class="pub-tab" data-tab="preprints" type="button">Preprints</button>
   </div>
 
-  <div id="pubmed-research" class="pub-panel">
+  <div id="pubmed-research" class="pub-panel active">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
@@ -267,29 +267,12 @@
     </div>
   </div>
 
-  <div id="biorxiv-preprints" class="pub-panel active">
+  <div id="pubmed-preprints" class="pub-panel">
     <div class="pub-feed" id="preprints-feed">
       <p class="pub-loading">Loading preprints...</p>
     </div>
   </div>
 </section>
-
-  <script>
-document.querySelectorAll(".pub-tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".pub-tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".pub-panel").forEach(panel => panel.classList.remove("active"));
-
-    tab.classList.add("active");
-
-    const panelId = tab.dataset.panel;
-    const panel = document.getElementById(panelId);
-    if (panel) {
-      panel.classList.add("active");
-    }
-  });
-});
-</script>
 
   <script>
 async function fetchAllBioRxivPreprints(startDate, endDate) {
@@ -607,27 +590,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function activateTab(tabName) {
-    document.querySelectorAll(".pub-tab").forEach(function (b) {
-      b.classList.remove("active");
-    });
+ function activateTab(tabName) {
+  document.querySelectorAll(".pub-tab").forEach(function (b) {
+    b.classList.remove("active");
+  });
 
-    document.querySelectorAll(".pub-panel").forEach(function (panel) {
-      panel.classList.remove("active");
-    });
+  document.querySelectorAll(".pub-panel").forEach(function (panel) {
+    panel.classList.remove("active");
+  });
 
-    const button = document.querySelector('.pub-tab[data-tab="' + tabName + '"]');
-    const panel = document.getElementById("pubmed-" + tabName);
+  const button = document.querySelector('.pub-tab[data-tab="' + tabName + '"]');
+  const panelId = "pubmed-" + tabName;
+  const panel = document.getElementById(panelId);
 
-    if (button) button.classList.add("active");
-    if (panel) panel.classList.add("active");
+  if (button) button.classList.add("active");
+  if (panel) panel.classList.add("active");
 
-    const panelId = "pubmed-" + tabName;
-    const query = panelQueries[panelId];
-    if (query) {
-      loadPubMedFeed(query, panelId);
-    }
+  if (tabName === "preprints") {
+    fetchBioRxivPreprints();
+    return;
   }
+
+  const query = panelQueries[panelId];
+  if (query) {
+    loadPubMedFeed(query, panelId);
+  }
+}
 
   document.querySelectorAll(".pub-tab").forEach(function (button) {
     button.addEventListener("click", function () {
