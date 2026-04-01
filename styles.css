@@ -410,13 +410,13 @@ html{
 .pub-journal {
   margin: 0;
   font-size: 15px;
-  color: #4f3b78;
+  color: #3f8f8c;
   line-height: 1.4;
 }
 
 .pub-year {
   font-size: 15px;
-  color: #4f3b78;
+  color: #3f8f8c;
   white-space: nowrap;
   flex-shrink: 0;
   padding-left: 12px;
