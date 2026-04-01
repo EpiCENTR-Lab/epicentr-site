@@ -249,19 +249,13 @@
 <section id="publications" class="section">
   <h2>Latest Publications</h2>
 
-  <<div class="pub-tabs">
-  <button class="pub-tab active" data-tab="pubmed-preprints" type="button">Preprints</button>
-  <button class="pub-tab" data-tab="pubmed-research" type="button">Original Research</button>
-  <button class="pub-tab" data-tab="pubmed-reviews" type="button">Reviews &amp; Commentaries</button>
-</div>
-
-  <div id="pubmed-preprints" class="pub-panel active">
-  <div class="pub-feed" id="preprints-feed">
-    <p class="pub-loading">Loading preprints...</p>
+  <div class="pub-tabs">
+    <button class="pub-tab" data-panel="pubmed-research" type="button">Original Research</button>
+    <button class="pub-tab" data-panel="pubmed-reviews" type="button">Reviews &amp; Commentaries</button>
+    <button class="pub-tab active" data-panel="biorxiv-preprints" type="button">Preprints</button>
   </div>
-</div>
-  
-  <div id="pubmed-research" class="pub-panel">
+
+  <div id="pubmed-research" class="pub-panel active">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
@@ -272,7 +266,30 @@
       <p class="pub-loading">Loading publications...</p>
     </div>
   </div>
+
+  <div id="biorxiv-preprints" class="pub-panel">
+    <div class="pub-feed" id="preprints-feed">
+      <p class="pub-loading">Loading preprints...</p>
+    </div>
+  </div>
 </section>
+
+  <script>
+document.querySelectorAll(".pub-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".pub-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".pub-panel").forEach(panel => panel.classList.remove("active"));
+
+    tab.classList.add("active");
+
+    const panelId = tab.dataset.panel;
+    const panel = document.getElementById(panelId);
+    if (panel) {
+      panel.classList.add("active");
+    }
+  });
+});
+</script>
 
   <script>
 async function fetchAllBioRxivPreprints(startDate, endDate) {
@@ -345,7 +362,7 @@ async function fetchBioRxivPreprints() {
 
     const filtered = allPreprints.filter(item => {
       const authors = (item.authors || "").toLowerCase();
-      return authors.includes("hynds");
+      return authors.includes("Hynds");
     });
 
     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
