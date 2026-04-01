@@ -444,11 +444,6 @@ html{
 
 /* RESPONSIVE */
 
-@media (max-width: 900px) {
-  .people-grid {
-    grid-template-columns: repeat(2, minmax(180px, 1fr));
-  }
-
   .nav {
     padding: 24px 24px;
   }
@@ -532,30 +527,23 @@ html{
   border-bottom-color: #3f8f8c;
 }
 
-@media (max-width: 900px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 560px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 560px) {
-  .gallery-overlay {
-    opacity: 1;
-    padding: 0.85rem;
-  }
-
-  .gallery-overlay span {
-    font-size: 0.9rem;
-  }
-}
+/* GALLERY */
 
 /* GALLERY */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gallery-card {
+  width: 100%;
+}
 
 .gallery-photo-wrap {
   position: relative;
@@ -566,7 +554,7 @@ html{
 .gallery-photo {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 220px;
   object-fit: cover;
   transition: transform 0.25s ease;
 }
@@ -581,13 +569,13 @@ html{
   padding: 1rem;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.72),
-    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.12),
     rgba(0, 0, 0, 0)
   );
   color: #ffffff;
-  opacity: 0;
-  transition: opacity 0.22s ease;
+  opacity: 1;
+  transition: background 0.22s ease;
 }
 
 .gallery-overlay span {
@@ -600,7 +588,36 @@ html{
 }
 
 .gallery-photo-wrap:hover .gallery-overlay {
-  opacity: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-photo {
+    height: 200px;
+  }
+
+  .gallery-overlay {
+    padding: 0.85rem;
+  }
+
+  .gallery-overlay span {
+    font-size: 0.9rem;
+  }
 }
 
 /* CONTACT */
