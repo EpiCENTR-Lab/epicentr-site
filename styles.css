@@ -442,45 +442,6 @@ html{
   padding-left: 12px;
 }
 
-/* CONTACT */
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  max-width: 700px;
-  margin: 40px auto 0;
-}
-
-.contact-left,
-.contact-right {
-  font-size: 17px;
-}
-
-.contact-left p,
-.contact-right p {
-  margin-bottom: 22px;
-}
-
-#contact a {
-  color: #4f3b78;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(79, 59, 120, 0.4);
-}
-
-#contact a:hover {
-  border-bottom-color: #4f3b78;
-}
-
-/* FOOTER */
-
-footer {
-  text-align: center;
-  padding: 50px 0 60px;
-  font-size: 14px;
-  color: #777777;
-}
-
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
@@ -569,4 +530,103 @@ footer {
 
 .resource-link:hover {
   border-bottom-color: #3f8f8c;
+}
+
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* GALLERY */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.gallery-card {
+  width: 100%;
+}
+
+.gallery-photo-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.gallery-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.gallery-overlay span {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.gallery-photo-wrap:hover .gallery-overlay {
+  opacity: 1;
+}
+
+/* CONTACT */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 700px;
+  margin: 40px auto 0;
+}
+
+.contact-left,
+.contact-right {
+  font-size: 17px;
+}
+
+.contact-left p,
+.contact-right p {
+  margin-bottom: 22px;
+}
+
+#contact a {
+  color: #4f3b78;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(79, 59, 120, 0.4);
+}
+
+#contact a:hover {
+  border-bottom-color: #4f3b78;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+  padding: 50px 0 60px;
+  font-size: 14px;
+  color: #777777;
 }
