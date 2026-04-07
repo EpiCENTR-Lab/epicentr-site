@@ -255,6 +255,7 @@
     <button class="pub-tab" data-tab="reviews" type="button">Reviews &amp; Commentaries</button>
   </div>
 
+  <!-- PREPRINTS -->
   <div id="pubmed-preprints" class="pub-panel">
     <div class="pub-feed">
 
@@ -285,8 +286,8 @@
           <div class="pub-year">2025</div>
         </div>
       </article>
-      
-     <article class="pub-card">
+
+      <article class="pub-card">
         <div class="pub-row">
           <div class="pub-text">
             <p class="pub-title">
@@ -328,23 +329,62 @@
         </div>
       </article>
 
- <div id="pubmed-research" class="pub-panel active">
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div id="pubmed-research" class="pub-panel active">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
   </div>
 
+  <!-- REVIEWS -->
   <div id="pubmed-reviews" class="pub-panel">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
   </div>
-    
-    </div>
-  </div>
 </section>
 
- <script>
+<style>
+  .pub-panel {
+    display: none;
+  }
+
+  .pub-panel.active {
+    display: block;
+  }
+
+  .pub-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .pub-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .pub-year {
+    flex: 0 0 4rem;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .pub-title,
+  .pub-journal {
+    margin: 0;
+  }
+
+  .pub-title a {
+    display: inline;
+  }
+</style>
+
+<script>
 (function () {
   const authorQuery = '(Hynds, Robert E.[author] OR Hynds, Rob E.[author])';
   const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])';
@@ -525,7 +565,6 @@
       });
 
       const searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" + searchParams.toString();
-
       const searchResponse = await fetchWithRetry(searchUrl, {}, 2);
       const searchData = await searchResponse.json();
       const ids = searchData?.esearchresult?.idlist || [];
@@ -547,7 +586,6 @@
       });
 
       const fetchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?" + fetchParams.toString();
-
       const fetchResponse = await fetchWithRetry(fetchUrl, {}, 2);
       const xmlText = await fetchResponse.text();
       const articles = parsePubmedXml(xmlText);
