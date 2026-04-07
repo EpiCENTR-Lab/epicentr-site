@@ -635,9 +635,9 @@ html{
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: 80px;
-  max-width: 700px;
+  max-width: 1000px;
   margin: 40px auto 0;
 }
 
