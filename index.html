@@ -250,18 +250,12 @@
   <h2>Latest Publications</h2>
 
   <div class="pub-tabs">
-    <button class="pub-tab active" data-tab="preprints" type="button">Preprints</button>
-    <button class="pub-tab" data-tab="research" type="button">Original Research</button>
+    <button class="pub-tab active" data-tab="research" type="button">Original Research</button>
     <button class="pub-tab" data-tab="reviews" type="button">Reviews &amp; Commentaries</button>
+    <button class="pub-tab" data-tab="preprints" type="button">Preprints</button>
   </div>
 
- <div id="pubmed-preprints" class="pub-panel active">
-    <div class="pub-feed" id="preprints-feed">
-      <p class="pub-loading">Loading preprints...</p>
-    </div>
-  </div>
-  
-  <div id="pubmed-research" class="pub-panel">
+  <div id="pubmed-research" class="pub-panel active">
     <div class="pub-feed">
       <p class="pub-loading">Loading publications...</p>
     </div>
@@ -272,104 +266,84 @@
       <p class="pub-loading">Loading publications...</p>
     </div>
   </div>
-</section>
 
-  <script>
-async function fetchAllBioRxivPreprints(startDate, endDate) {
-  let cursor = 0;
-  let results = [];
-  let keepGoing = true;
+  <div id="pubmed-preprints" class="pub-panel">
+    <div class="pub-feed">
 
-  while (keepGoing) {
-    const url = `https://api.biorxiv.org/details/biorxiv/${startDate}/${endDate}/${cursor}/json`;
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`bioRxiv request failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const batch = data.collection || [];
-    const total = Number(data.messages?.[0]?.count || 0);
-
-    results = results.concat(batch);
-    cursor += batch.length;
-
-    if (!batch.length || cursor >= total) {
-      keepGoing = false;
-    }
-  }
-
-  return results;
-}
-
-function renderPreprints(items) {
-  const container = document.getElementById("preprints-feed");
-  if (!container) return;
-
-  if (!items.length) {
-    container.innerHTML = `<p class="pub-loading">No preprints found.</p>`;
-    return;
-  }
-
-  container.innerHTML = items.map(item => {
-    const preprintUrl = `https://www.biorxiv.org/content/${item.doi}v${item.version}`;
-    const year = new Date(item.date).getFullYear();
-
-    return `
       <article class="pub-card">
         <div class="pub-row">
           <div class="pub-text">
-            <h3 class="pub-title">
-              <a href="${preprintUrl}" target="_blank" rel="noopener noreferrer">
-                ${item.title}
+            <p class="pub-title">
+              <a href="https://doi.org/10.1101/2025.12.17.694989" target="_blank" rel="noopener noreferrer">
+                Podoplanin expression identifies human airway basal cells with higher progenitor cell potential
               </a>
-            </h3>
+            </p>
             <p class="pub-journal">bioRxiv</p>
           </div>
-          <div class="pub-year">${year}</div>
+          <div class="pub-year">2025</div>
         </div>
       </article>
-    `;
-  }).join("");
-}
 
-async function fetchBioRxivPreprints() {
-  const container = document.getElementById("preprints-feed");
-  if (!container) return;
+      <article class="pub-card">
+        <div class="pub-row">
+          <div class="pub-text">
+            <p class="pub-title">
+              <a href="https://doi.org/10.1101/2025.10.13.682115" target="_blank" rel="noopener noreferrer">
+                Neutrophil myeloperoxidase as a functional biomarker for RSV severity: implications for in vitro therapeutic screening
+              </a>
+            </p>
+            <p class="pub-journal">bioRxiv</p>
+          </div>
+          <div class="pub-year">2025</div>
+        </div>
+      </article>
 
-  container.innerHTML = `<p class="pub-loading">Loading preprints...</p>`;
+      <article class="pub-card">
+        <div class="pub-row">
+          <div class="pub-text">
+            <p class="pub-title">
+              <a href="https://doi.org/10.1101/2025.09.15.675861" target="_blank" rel="noopener noreferrer">
+                WS6 enables scalable ex vivo expansion and gene editing of human basal epithelial cells
+              </a>
+            </p>
+            <p class="pub-journal">bioRxiv</p>
+          </div>
+          <div class="pub-year">2025</div>
+        </div>
+      </article>
 
-  try {
-    const allPreprints = await fetchAllBioRxivPreprints("2025-01-01", "2026-12-31");
+      <article class="pub-card">
+        <div class="pub-row">
+          <div class="pub-text">
+            <p class="pub-title">
+              <a href="https://doi.org/10.1101/2025.03.28.645652" target="_blank" rel="noopener noreferrer">
+                Donor-derived airway ALI model for high-throughput screening of antiviral combinations with concurrent analysis of antiviral efficacy and epithelial toxicity using ciliR
+              </a>
+            </p>
+            <p class="pub-journal">bioRxiv</p>
+          </div>
+          <div class="pub-year">2025</div>
+        </div>
+      </article>
 
-    const filtered = allPreprints.filter(item => {
-  const authors = (item.authors || "").toLowerCase();
+      <article class="pub-card">
+        <div class="pub-row">
+          <div class="pub-text">
+            <p class="pub-title">
+              <a href="https://doi.org/10.1101/2025.09.15.675999" target="_blank" rel="noopener noreferrer">
+              Cell migration sculpts evolutionary dynamics favouring therapy resistance in lung cancer
+            </p>
+            <p class="pub-journal">bioRxiv</p>
+          </div>
+          <div class="2025"></div>
+        </div>
+      </article>
 
-  return (
-    authors.includes("robert e. hynds") ||
-    authors.includes("rob e. hynds") ||
-    authors.includes("r. hynds") ||
-    authors.includes("r. hynds") ||
-    authors.includes("r.e. hynds") ||
-  );
-});
+    </div>
+  </div>
+</section>
 
-    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    renderPreprints(allPreprints.slice(0, 10));
-  } catch (error) {
-    console.error(error);
-    container.innerHTML = `<p class="pub-loading">Unable to load preprints.</p>`;
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  fetchBioRxivPreprints();
-});
-</script>
-
-  <script>
+ <script>
 (function () {
   const authorQuery = '(Hynds, Robert E.[author] OR Hynds, Rob E.[author])';
   const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])';
@@ -418,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "cytotherapy": "Cytotherapy",
       "science advances": "Science Advances",
       "european respiratory journal": "European Respiratory Journal",
-      "nature communications": "Nature Communications",
+      "nature communications": "Nature Communications"
     };
 
     return overrides[lower] || key;
@@ -561,7 +535,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // small pause to avoid bursting requests
       await delay(200);
 
       const fetchParams = new URLSearchParams({
@@ -597,32 +570,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
- function activateTab(tabName) {
-  document.querySelectorAll(".pub-tab").forEach(function (b) {
-    b.classList.remove("active");
-  });
+  function activateTab(tabName) {
+    document.querySelectorAll(".pub-tab").forEach(function (b) {
+      b.classList.remove("active");
+    });
 
-  document.querySelectorAll(".pub-panel").forEach(function (panel) {
-    panel.classList.remove("active");
-  });
+    document.querySelectorAll(".pub-panel").forEach(function (panel) {
+      panel.classList.remove("active");
+    });
 
-  const button = document.querySelector('.pub-tab[data-tab="' + tabName + '"]');
-  const panelId = "pubmed-" + tabName;
-  const panel = document.getElementById(panelId);
+    const button = document.querySelector('.pub-tab[data-tab="' + tabName + '"]');
+    const panel = document.getElementById("pubmed-" + tabName);
 
-  if (button) button.classList.add("active");
-  if (panel) panel.classList.add("active");
+    if (button) button.classList.add("active");
+    if (panel) panel.classList.add("active");
 
-  if (tabName === "preprints") {
-    fetchBioRxivPreprints();
-    return;
+    const panelId = "pubmed-" + tabName;
+    const query = panelQueries[panelId];
+    if (query) {
+      loadPubMedFeed(query, panelId);
+    }
   }
-
-  const query = panelQueries[panelId];
-  if (query) {
-    loadPubMedFeed(query, panelId);
-  }
-}
 
   document.querySelectorAll(".pub-tab").forEach(function (button) {
     button.addEventListener("click", function () {
@@ -630,7 +598,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Load only the default active tab on page load
   const activeButton = document.querySelector(".pub-tab.active");
   const defaultTab = activeButton ? activeButton.dataset.tab : "research";
   activateTab(defaultTab);
