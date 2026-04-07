@@ -78,6 +78,16 @@ html{
   text-align: center;
 }
 
+.subtitle a {
+  color: #3f8f8c;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(63, 143, 140, 0.4);
+}
+
+.subtitle a:hover {
+  border-bottom-color: #3f8f8c;
+}
+
 .subtitle p {
   margin: 0;
 }
