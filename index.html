@@ -341,7 +341,7 @@ async function fetchBioRxivPreprints() {
   container.innerHTML = `<p class="pub-loading">Loading preprints...</p>`;
 
   try {
-    const allPreprints = await fetchAllBioRxivPreprints("2023-01-01", "2026-12-31");
+    const allPreprints = await fetchAllBioRxivPreprints("2025-01-01", "2026-12-31");
 
     const filtered = allPreprints.filter(item => {
   const authors = (item.authors || "").toLowerCase();
