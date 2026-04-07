@@ -345,13 +345,13 @@ async function fetchBioRxivPreprints() {
 
     const filtered = allPreprints.filter(item => {
   const authors = (item.authors || "").toLowerCase();
-  const corresponding = (item.author_corresponding || "").toLowerCase();
-  const institution = (item.author_corresponding_institution || "").toLowerCase();
 
   return (
-    authors.includes("hynds") ||
-    corresponding.includes("hynds") ||
-    institution.includes("university college london")
+    authors.includes("robert e. hynds") ||
+    authors.includes("rob e. hynds") ||
+    authors.includes("r. hynds") ||
+    authors.includes("r. hynds") ||
+    authors.includes("r.e. hynds") ||
   );
 });
 
