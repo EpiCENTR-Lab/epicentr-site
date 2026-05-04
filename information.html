@@ -3,18 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- SEO: default title / overridden per-topic by JS -->
   <title>Information | EpiCENTR Lab — Airway Epithelial Biology</title>
   <meta name="description" content="Informational resources on airway basal cells, epidermolysis bullosa, lung organoids, cell and gene therapy, and airway epithelial regeneration — from the EpiCENTR research group at UCL." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSZGBZY37P"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -24,649 +20,154 @@
   </script>
 
   <style>
-    /* ── NAV: keep everything on one line ── */
+  /* ── NAV ── */
+  .nav { padding-left:36px; padding-right:36px; flex-wrap:nowrap; }
+  .nav-right { display:flex; align-items:center; flex-wrap:nowrap; white-space:nowrap; }
+  .nav-right a, .nav-right .nav-dropdown { margin-left:22px; }
+  .nav-dropdown { position:relative; display:inline-flex; align-items:center; }
+  .nav-dropdown > a { display:inline-flex; align-items:center; gap:3px; margin-left:0; }
+  .nav-dropdown > a::after { content:"▾"; font-size:10px; opacity:0.6; }
+  .dropdown-menu {
+    display:none; position:absolute; top:100%; right:0; left:auto;
+    background:#f2f0ec; border:1px solid #e6e6e6; border-radius:12px;
+    padding:20px 0 8px; box-shadow:0 8px 28px rgba(0,0,0,0.10); z-index:2000;
+  }
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu { display:block; }
+  .dropdown-menu a {
+    display:block; padding:10px 20px; margin:0; font-size:14px;
+    color:#4f3b78; text-decoration:none; white-space:nowrap;
+  }
+  .dropdown-menu a:hover { background:rgba(79,59,120,0.07); opacity:1; }
 
-    /* Tighten padding and spacing so all 7 items fit */
-    .nav {
-      padding-left: 36px;
-      padding-right: 36px;
-      flex-wrap: nowrap;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-    }
-
-    .nav-right a,
-    .nav-right .nav-dropdown {
-      margin-left: 22px;
-    }
-
-    /* ── DROPDOWN NAV ── */
-    .nav-dropdown {
-      position: relative;
-      /* inline-flex so the chevron sits flush with the link text */
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .nav-dropdown > a {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      margin-left: 0; /* spacing handled by .nav-dropdown margin above */
-    }
-
-    .nav-dropdown > a::after {
-      content: "▾";
-      font-size: 10px;
-      opacity: 0.6;
-    }
-
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      /* flush to the bottom of the nav-dropdown — no gap to lose hover over */
-      top: 100%;
-      left: auto;
-      right: 0;
-      background: #f2f0ec;
-      border: 1px solid #e6e6e6;
-      border-radius: 12px;
-      /* push the visible box down with padding-top instead of a gap,
-         so the hover area is continuous from trigger to menu items */
-      padding: 20px 0 8px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
-      z-index: 2000;
-    }
-
-    .nav-dropdown:hover .dropdown-menu,
-    .nav-dropdown:focus-within .dropdown-menu {
-      display: block;
-    }
-
-    .dropdown-menu a {
-      display: block;
-      padding: 10px 20px;
-      margin: 0;
-      font-size: 14px;
-      color: #4f3b78;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .dropdown-menu a:hover {
-      background: rgba(79, 59, 120, 0.07);
-      opacity: 1;
-    }
-
-    .dropdown-menu a.active-topic {
-      font-weight: 600;
-      background: rgba(79, 59, 120, 0.10);
-    }
-
-    /* ── INFO PAGE LAYOUT ── */
-    .info-layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 0;
-      max-width: 1080px;
-      margin: 60px auto 120px;
-      padding: 0 20px;
-      align-items: start;
-    }
-
-    /* ── SIDEBAR ── */
-    .info-sidebar {
-      position: sticky;
-      top: 90px;
-      padding-right: 40px;
-    }
-
-    .info-sidebar h2 {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #999;
-      margin: 0 0 16px;
-    }
-
-    .sidebar-nav {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .sidebar-nav li {
-      margin-bottom: 4px;
-    }
-
-    .sidebar-nav button {
-      appearance: none;
-      background: none;
-      border: none;
-      padding: 9px 14px;
-      width: 100%;
-      text-align: left;
-      font-family: inherit;
-      font-size: 14.5px;
-      color: #4f3b78;
-      border-radius: 8px;
-      cursor: pointer;
-      line-height: 1.35;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-
-    .sidebar-nav button:hover {
-      background: rgba(79, 59, 120, 0.07);
-    }
-
-    .sidebar-nav button.active {
-      background: #4f3b78;
-      color: #f2f0ec;
-      font-weight: 500;
-    }
-
-    /* ── CONTENT AREA ── */
-    .info-content {
-      min-width: 0;
-      border-left: 1px solid #e6e6e6;
-      padding-left: 52px;
-    }
-
-    .info-panel {
-      display: none;
-    }
-
-    .info-panel.active {
-      display: block;
-    }
-
-    /* Panel hero image */
-    .info-hero-img {
-      width: 100%;
-      max-height: 320px;
-      object-fit: cover;
-      border-radius: 18px;
-      display: block;
-      margin-bottom: 36px;
-    }
-
-    /* ── TYPOGRAPHY WITHIN PANELS ── */
-    .info-panel h1 {
-      font-size: 30px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      color: #2b2b2b;
-      margin: 0 0 6px;
-    }
-
-    .info-panel .panel-subtitle {
-      font-size: 17px;
-      color: #3f8f8c;
-      margin: 0 0 32px;
-    }
-
-    .info-panel h2 {
-      position: relative;
-      font-size: 19px;
-      font-weight: 600;
-      color: #4f3b78;
-      margin: 40px 0 14px;
-      padding-bottom: 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .info-panel h2::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 32px;
-      height: 2px;
-      background: #6c5aa0;
-    }
-
-    .info-panel p {
-      margin: 0 0 18px;
-      line-height: 1.7;
-    }
-
-    .info-panel a {
-      color: #3f8f8c;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(63, 143, 140, 0.4);
-    }
-
-    .info-panel a:hover {
-      border-bottom-color: #3f8f8c;
-    }
-
-    .info-panel .caveat {
-      background: rgba(63, 143, 140, 0.08);
-      border-left: 3px solid #3f8f8c;
-      border-radius: 0 10px 10px 0;
-      padding: 14px 18px;
-      margin: 28px 0;
-      font-size: 15px;
-      line-height: 1.65;
-      color: #2b2b2b;
-    }
-
-    .info-panel .caveat strong {
-      color: #3f8f8c;
-    }
-
-    /* ── BREADCRUMB ── */
-    .info-breadcrumb {
-      font-size: 13px;
-      color: #999;
-      margin-bottom: 28px;
-    }
-
-    .info-breadcrumb a {
-      color: #999;
-      text-decoration: none;
-      border-bottom: none;
-    }
-
-    .info-breadcrumb a:hover {
-      color: #4f3b78;
-    }
-
-    .info-breadcrumb span {
-      margin: 0 6px;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 750px) {
-      .info-layout {
-        grid-template-columns: 1fr;
-        margin-top: 30px;
-      }
-
-      .info-sidebar {
-        position: static;
-        padding-right: 0;
-        margin-bottom: 32px;
-      }
-
-      .info-sidebar h2 {
-        display: none;
-      }
-
-      .sidebar-nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .sidebar-nav li {
-        margin-bottom: 0;
-      }
-
-      .sidebar-nav button {
-        width: auto;
-        padding: 7px 14px;
-        border: 1px solid #d9d9d9;
-        border-radius: 999px;
-        font-size: 13.5px;
-      }
-
-      .sidebar-nav button.active {
-        border-color: #4f3b78;
-      }
-
-      .info-content {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid #e6e6e6;
-        padding-top: 32px;
-      }
-    }
+  /* ── HUB PAGE ── */
+  .info-hub {
+    max-width: 820px;
+    margin: 80px auto 120px;
+    padding: 0 20px;
+  }
+  .info-hub h1 {
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #2b2b2b;
+    margin: 0 0 12px;
+  }
+  .info-hub .hub-intro {
+    font-size: 18px;
+    color: #3f8f8c;
+    margin: 0 0 48px;
+    line-height: 1.6;
+  }
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .hub-card {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+    padding: 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hub-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .hub-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4f3b78;
+    margin: 0 0 10px;
+  }
+  .hub-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #444;
+    margin: 0;
+  }
+  .hub-arrow {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 14px;
+    color: #3f8f8c;
+  }
+  @media (max-width: 560px) {
+    .hub-grid { grid-template-columns: 1fr; }
+  }
   </style>
 </head>
-
 <body>
 
-<!-- ═══════════════════════════════════════════════
-     NAVIGATION  (copy this nav block into index.html
-     replacing the existing <header class="nav">)
-═══════════════════════════════════════════════ -->
 <header class="nav">
-  <div class="nav-left">
-    <a href="index.html">EpiCENTR</a>
-  </div>
-
+  <div class="nav-left"><a href="index.html">EpiCENTR</a></div>
   <nav class="nav-right">
     <a href="index.html#research">Research</a>
     <a href="index.html#people">The Team</a>
     <a href="index.html#publications">Publications</a>
     <a href="index.html#resources">Resources</a>
     <a href="index.html#gallery">Gallery</a>
-
-    <!-- Information dropdown -->
     <div class="nav-dropdown">
       <a href="information.html" class="active">Information</a>
-      <div class="dropdown-menu" id="dropdown-menu">
-        <a href="information.html?topic=basal-cells"        data-topic="basal-cells">Airway basal cells</a>
-        <a href="information.html?topic=eb"                 data-topic="eb">Epidermolysis bullosa &amp; the airway</a>
-        <a href="information.html?topic=organoids"          data-topic="organoids">Airway organoids &amp; <i>in vitro</i> models</a>
-        <a href="information.html?topic=cell-gene-therapy"  data-topic="cell-gene-therapy">Cell &amp; gene therapy</a>
-        <a href="information.html?topic=regeneration"       data-topic="regeneration">Airway epithelial regeneration</a>
+      <div class="dropdown-menu">
+        <a href="airway-basal-cells.html">Airway Basal Cells</a>
+        <a href="epidermolysis-bullosa.html">Epidermolysis Bullosa &amp; the Airway</a>
+        <a href="airway-organoids.html">Airway Organoids &amp; <i>In Vitro</i> Models</a>
+        <a href="cell-gene-therapy.html">Cell &amp; Gene Therapy</a>
+        <a href="airway-epithelial-regeneration.html">Airway Epithelial Regeneration</a>
       </div>
     </div>
-
     <a href="index.html#contact">Contact</a>
   </nav>
 </header>
 
-<!-- ═══════════════════════════════════════════════
-     PAGE BODY
-═══════════════════════════════════════════════ -->
-<div class="info-layout">
+<div class="info-hub">
+  <h1>Information</h1>
+  <p class="hub-intro">Background on the biology and diseases that underpin our research at EpiCENTR.</p>
 
-  <!-- ── SIDEBAR ── -->
-  <aside class="info-sidebar">
-    <h2>Topics</h2>
-    <ul class="sidebar-nav">
-      <li>
-        <button class="active" data-topic="basal-cells">Airway basal cells</button>
-      </li>
-      <li>
-        <button data-topic="eb">Epidermolysis bullosa &amp; the airway</button>
-      </li>
-      <li>
-        <button data-topic="organoids">Airway organoids &amp; <i>in vitro</i> models</button>
-      </li>
-      <li>
-        <button data-topic="cell-gene-therapy">Cell &amp; gene therapy for airway disease</button>
-      </li>
-      <li>
-        <button data-topic="regeneration">Airway epithelial regeneration in lung disease</button>
-      </li>
-    </ul>
-  </aside>
+  <div class="hub-grid">
 
-  <!-- ── CONTENT ── -->
-  <main class="info-content">
+    <a class="hub-card" href="airway-basal-cells.html">
+      <h2>Airway Basal Cells</h2>
+      <p>The stem cell population of the respiratory epithelium — how they maintain, repair and regenerate the airway lining, and why they are central to lung health and disease.</p>
+      <span class="hub-arrow">Read more →</span>
+    </a>
 
-    <!-- ════════════════════════════════
-         PANEL 1 — Airway Basal Cells
-    ════════════════════════════════ -->
-    <article class="info-panel active" id="panel-basal-cells"
-      data-title="Airway Basal Cells | Stem Cells of the Respiratory Epithelium | EpiCENTR"
-      data-description="Airway basal cells are the stem cells of the human respiratory epithelium. Learn how these TP63-expressing progenitors maintain, repair and regenerate the airway lining, and why they are central to lung health and disease.">
+    <a class="hub-card" href="epidermolysis-bullosa.html">
+      <h2>Epidermolysis Bullosa &amp; the Airway</h2>
+      <p>How this rare genetic disorder affects the airway in children, causing life-threatening laryngotracheal stenosis, and our work towards a cell and gene therapy approach.</p>
+      <span class="hub-arrow">Read more →</span>
+    </a>
 
-      <div class="info-breadcrumb">
-        <a href="index.html">EpiCENTR</a><span>›</span> Information <span>›</span> Airway Basal Cells
-      </div>
+    <a class="hub-card" href="airway-organoids.html">
+      <h2>Airway Organoids &amp; <i>In Vitro</i> Models</h2>
+      <p>Air–liquid interface cultures and organoid systems for studying the airway epithelium outside the body — what these models can and cannot tell us.</p>
+      <span class="hub-arrow">Read more →</span>
+    </a>
 
-      <img src="info-basal-cells.png" alt="Illustration of airway basal cells in the pseudostratified epithelium" class="info-hero-img" onerror="this.style.display='none'">
+    <a class="hub-card" href="cell-gene-therapy.html">
+      <h2>Cell &amp; Gene Therapy for Airway Disease</h2>
+      <p>The biological rationale for repairing diseased airway epithelium at the cellular level, the challenges of <em>ex vivo</em> expansion and delivery, and the current state of the field.</p>
+      <span class="hub-arrow">Read more →</span>
+    </a>
 
-      <h1>Airway basal cells</h1>
-      <p class="panel-subtitle">The stem cells of the respiratory epithelium</p>
+    <a class="hub-card" href="airway-epithelial-regeneration.html">
+      <h2>Airway Epithelial Regeneration in Lung Disease</h2>
+      <p>Why epithelial repair matters in conditions including COPD, cystic fibrosis, primary ciliary dyskinesia, and viral infection — and what regenerative medicine might offer.</p>
+      <span class="hub-arrow">Read more →</span>
+    </a>
 
-      <p>The human airway is lined by a pseudostratified epithelium — a layer of cells that together form a continuous, protective barrier against inhaled pathogens and particulate matter. This barrier is dynamic as cells are lost and replaced continuously and actively repaired following injury or infection. The cells responsible for this maintenance and regenerative capacity are airway basal cells.</p>
-
-      <h2>What are airway basal cells?</h2>
-      <p> Basal cells are the stem cell population of the proximal airway epithelium, residing in direct contact with the basement membrane. They are characterised by expression of the transcription factor TP63 (p63) and structural proteins including keratin 5 (KRT5) and keratin 14 (KRT14). In the pseudostratified epithelium of the human nose, larynx, trachea and bronchi, basal cells constitute the major proliferative cell type. </p>
-      <p>During normal tissue homeostasis, basal cells divide at a low rate to replenish the differentiated cells of the epithelium — primarily ciliated cells, which drive mucociliary clearance, and mucosecretory (goblet) cells, which produce the mucus layer. Following epithelial injury, basal cells expand rapidly and differentiate to restore barrier function. This capacity for self-renewal and multipotent differentiation is the defining property of a stem cell population.</p>
-
-      <h2>Basal cell heterogeneity</h2>
-      <p> Airway basal cells are not a uniform population. Subsets can be distinguished by marker gene expression. For example, only a fraction of KRT5-positive basal cells co-express KRT14, and this subset is thought to be enriched for injury-responsive progenitors. More recently, single-cell transcriptomic approaches have revealed considerable diversity within the basal cell compartment, identifying luminal progenitor cells that express both basal and luminal markers and are thought to represent cells in transit towards differentiation.</p>
-    
-      <h2>Basal cells and lung disease</h2>
-      <p>Airway basal cells are not a uniform population. Subsets can be distinguished by marker gene expression. For example, only a fraction of KRT5-positive basal cells co-express KRT14, and this subset is thought to be enriched for injury-responsive progenitors. More recently, single-cell transcriptomic approaches have revealed considerable diversity within the basal cell compartment, identifying luminal progenitor cells that express both basal and luminal markers and are thought to represent cells in transit towards differentiation.</p>      <p>Beyond chronic disease, the rapid epithelial desquamation that accompanies infections with respiratory viruses including influenza and respiratory syncytial virus (RSV) requires basal cell-mediated repair for full recovery of barrier function. Airway basal cells are also the leading candidate cell-of-origin for lung squamous cell carcinoma, which arises predominantly in the central airways and shares the basal cell marker expression profile.</p>
-      <p>Dysfunction of airway basal cells contributes to a range of chronic lung diseases. In chronic obstructive pulmonary disease (COPD) and asthma, basal cells from affected donors demonstrate impaired differentiation capacity in vitro. In cystic fibrosis, genetic variants in CFTR disrupt ion transport across the differentiated epithelium, but basal cells also carry the causative variant and represent a tractable target for gene correction. Primary ciliary dyskinesia similarly affects the ciliated cells produced by basal cell differentiation, with consequences for mucociliary clearance.</p>
-      <p>Beyond chronic disease, the rapid epithelial desquamation that accompanies infections with respiratory viruses including influenza and respiratory syncytial virus (RSV) requires basal cell-mediated repair for full recovery of barrier function. Airway basal cells are also the leading candidate cell-of-origin for lung squamous cell carcinoma, which arises predominantly in the central airways and shares the basal cell marker expression profile.</p>
-      
-      <h2>Modelling airway basal cells in the laboratory</h2>
-      <p>Much of what we know about airway basal cell biology has emerged from advances in primary cell culture. Methods for expanding human basal cells in the laboratory have improved considerably over the past decade. Co-culture with mitotically inactivated fibroblast feeder cells, combined with inhibition of the Rho-associated kinase (ROCK) pathway, allows large numbers of basal cells to be grown from small bronchial biopsies while retaining their differentiation capacity. We have recently reported a <a href="https://doi.org/10.1101/2025.09.15.675861" target="_blank" rel="noopener noreferrer">new approach using WS6 for scalable <i>ex vivo</i> expansion and gene editing of human basal epithelial cells</a>.</p>
-      <p>Three-dimensional organoid and tracheosphere systems provide complementary model systems in which basal cells self-organise into structures containing multiple airway epithelial cell types. We have applied these approaches to <a href="https://doi.org/10.1242/jcs.263487" target="_blank" rel="noopener noreferrer">identify Wnt signalling as a key regulator of basal cell proliferation and fate</a>.</p>
-
-      <h2>Why basal cells matter for regenerative medicine</h2>
-      <p>The ability to expand patient-derived basal cells <i>ex vivo</i>, genetically modify them, and return them to the airway opens the possibility of autologous cell and gene therapies for airway diseases. Learn more about our work on <button class="inline-topic-link" data-topic="cell-gene-therapy">cell and gene therapy for airway disease</button> and about <button class="inline-topic-link" data-topic="eb">epidermolysis bullosa</button>, one of the rare diseases where we are developing proof-of-concept for this approach.</p>
-    </article>
-
-    <!-- ════════════════════════════════
-         PANEL 2 — Epidermolysis Bullosa
-    ════════════════════════════════ -->
-    <article class="info-panel" id="panel-eb"
-      data-title="Epidermolysis Bullosa and Airway Disease | EB in Children | EpiCENTR"
-      data-description="Epidermolysis bullosa (EB) can affect the airway, causing life-threatening stenosis in children. Learn how EpiCENTR is developing cell and gene therapy approaches to treat airway disease in EB.">
-
-      <div class="info-breadcrumb">
-        <a href="index.html">EpiCENTR</a><span>›</span> Information <span>›</span> Epidermolysis Bullosa &amp; the Airway
-      </div>
-
-      <img src="info-eb.png" alt="Illustration of epidermolysis bullosa airway involvement" class="info-hero-img" onerror="this.style.display='none'">
-
-      <h1>Epidermolysis bullosa and the airway</h1>
-      <p class="panel-subtitle">A rare genetic disease affecting epithelial tissues</p>
-
-      <div class="caveat">
-        <strong>A note for patients and families:</strong> The cell and gene therapy work described on this page represents early-stage laboratory research — a proof-of-concept study. It is not yet available as a clinical treatment. We are working towards the goal of progressing these approaches to the clinic, but this will require further research and clinical trials.
-      </div>
-
-      <p>Epidermolysis bullosa (EB) is a group of rare inherited disorders characterised by extreme fragility of epithelial tissues. In most people's understanding, EB is a skin condition — and skin involvement is indeed the most common presentation, with blistering and scarring occurring in response to even trivial trauma. However, EB can affect any epithelial tissue in the body, and airway involvement represents one of the most severe and least well-understood aspects of the disease.</p>
-
-      <h2>What is epidermolysis bullosa?</h2>
-      <p>EB is caused by genetic variants in genes encoding proteins that maintain the structural integrity of epithelial tissues. These proteins — including the components of laminin-332, type XVII collagen, and integrins — are essential for anchoring epithelial cells to the basement membrane, the specialised extracellular matrix that underlies all epithelial layers.</p>
-      <p>EB is classified into four main subtypes according to the level within the epithelium at which cleavage occurs: EB simplex (EBS), junctional EB (JEB), dystrophic EB (DEB), and Kindler EB. Within these subtypes, there are at least 30 clinically distinct phenotypes, reflecting the diversity of the causative genes and variants involved. The severity of EB ranges from localised skin involvement with a near-normal life expectancy to severe, generalised disease that is associated with high infant mortality.</p>
-
-      <h2>How does EB affect the airway?</h2>
-      <p>Airway involvement is most common in two subtypes of junctional EB: JEB severe (JEB-S) and laryngo-onycho-cutaneous (LOC) syndrome. In our patient cohort within the ENT department at Great Ormond Street Hospital, both are predominantly caused by variants in <em>LAMA3</em>, the gene encoding the alpha-3 subunit of the laminin-332 protein complex. Laminin-332 is expressed by airway epithelial basal cells and is essential for their attachment to the basement membrane.</p>
-      <p>In the airway, loss of this adhesion leads to blistering and scarring of the fragile mucosa. This can occur spontaneously or be triggered by events such as coughing or crying. Over time, recurrent blistering and scarring cause progressive narrowing of the airway — a condition known as laryngotracheal stenosis — which can be life-threatening. Based on our experience, patients suffer high degrees of morbidity from this complication, and mortality is a real risk. Current management relies on surgical dilation and, in severe cases, tracheostomy — palliative interventions that do not address the underlying cause of the disease.</p>
-
-      <h2>Towards a cell and gene therapy</h2>
-      <p>The fundamental problem in LAMA3-associated EB is that the patient's airway basal cells cannot produce functional laminin-332. If those cells could be corrected — by restoring wild-type <em>LAMA3</em> expression — and returned to the patient's airway, they might be capable of re-establishing a stable, adhesive epithelium.</p>
-      <p>We have <a href="https://doi.org/10.1016/j.ymthe.2024.02.032" target="_blank" rel="noopener noreferrer">demonstrated proof of concept for this approach</a> using primary airway basal cells derived from children with airway EB. EB patient-derived basal cells showed weak adhesion to culture substrates consistent with their adhesion deficit, but could otherwise be expanded in culture similarly to cells from unaffected donors. Lentiviral delivery of a wild-type <i>LAMA3</i> construct restored cell adhesion to levels comparable to non-EB donor cells. Corrected cells were also able to differentiate at an air–liquid interface, producing ciliated cells with normal ciliary beat frequency.</p>
-      <p>These findings support the feasibility of a combined cell and gene therapy strategy: take a small biopsy of the patient's own airway basal cells, expand them <i>ex vivo</i>, correct the genetic defect using a lentiviral vector, and return the corrected cells to the airway. Much work remains before such an approach could be tested in patients — including optimisation of the lentiviral vector and cell delivery to airways — but this study establishes that the key early steps are individually achievable.</p>
-
-      <h2>Our ongoing work</h2>
-      <p>At EpiCENTR, we are continuing to develop the tools needed to progress this approach towards the clinic, including <a href="https://doi.org/10.1101/2025.09.15.675861" target="_blank" rel="noopener noreferrer">scalable methods for <i>ex vivo</i> basal cell expansion and gene editing</a> and optimised approaches to surgical delivery of corrected cells to the airway. This work is conducted in close collaboration with clinical colleagues at Great Ormond Street Hospital. Learn more about <button class="inline-topic-link" data-topic="basal-cells">airway basal cells</button> and about <button class="inline-topic-link" data-topic="cell-gene-therapy">cell and gene therapy for airway disease</button> more broadly.</p>
-    </article>
-
-    <!-- ════════════════════════════════
-         PANEL 3 — Organoids
-    ════════════════════════════════ -->
-    <article class="info-panel" id="panel-organoids"
-      data-title="Airway Organoids and In Vitro Lung Models | EpiCENTR Lab, UCL"
-      data-description="Airway organoids and air–liquid interface cultures are powerful tools for studying the respiratory epithelium in the laboratory. Learn how these human cell models are built, what questions they can address, and what their limitations are.">
-
-      <div class="info-breadcrumb">
-        <a href="index.html">EpiCENTR</a><span>›</span> Information <span>›</span> Airway organoids &amp; <i>in vitro</i> models
-      </div>
-
-      <img src="info-organoids.png" alt="Illustration of airway organoid culture system" class="info-hero-img" onerror="this.style.display='none'">
-
-      <h1>Airway organoids &amp; <i>in vitro</i> models of the lung</h1>
-      <p class="panel-subtitle">Creating a model of the airway outside the body</p>
-
-      <p>Understanding how the human airway functions — and how it changes in disease — requires models that accurately recapitulate its biology. Animal models have provided important insights, but there are well-recognised differences between rodent and human respiratory biology that limit translation. Human cell models of the airway, including air–liquid interface (ALI) cultures and organoids, offer an important alternative.</p>
-
-      <h2>Air–liquid interface cultures</h2>
-      <p>The best-established <i>in vitro</i> model of the mucociliary airway epithelium is the air–liquid interface culture. In this system, airway basal cells are seeded onto a porous membrane support and submerged in culture medium until they form a confluent monolayer. The medium is then removed from the apical surface, exposing the cells to air. Over the following two to four weeks, this air exposure drives differentiation: basal cells generate ciliated cells and mucosecretory cells, producing a pseudostratified epithelium with mucociliary activity that resembles the human airway in vivo.</p>
-      <p>ALI cultures can be established from basal cells derived from donors with different disease backgrounds — including cystic fibrosis, COPD or primary ciliary dyskinesia — enabling direct comparison of healthy and diseased epithelia. They are widely used for studies of host–pathogen interactions, drug toxicity, and mucociliary function.</p>
-
-      <h2>Organoids and tracheospheres</h2>
-      <p>Three-dimensional organoid cultures provide a complementary approach. When airway basal cells are embedded in an extracellular matrix and cultured in the absence of a supporting surface, they self-organise into spherical structures — variously termed tracheospheres, bronchospheres, or simply airway organoids — that contain basal, ciliated, and secretory cells arranged around a central lumen.</p>
-      <p>The key advantage of organoid systems is that they capture aspects of the three-dimensional organisation and cell–cell interactions of the tissue of origin that are absent in flat, two-dimensional cultures. They are also amenable to quantitative assays — colony formation efficiency, organoid size, and ciliary beat frequency can all be measured systematically — making them well-suited to screens for compounds that modulate basal cell behaviour. We have used this approach to <a href="https://doi.org/10.1242/jcs.263487" target="_blank" rel="noopener noreferrer">identify Wnt signalling pathway activators as pro-proliferative compounds in airway basal cells</a>.</p>
-
-      <div class="caveat">
-        <strong>Current limitations:</strong> The question of how closely human airway organoids recapitulate the tissue of origin — and which culture conditions best support physiologically relevant differentiation — is unresolved. Most current airway organoids also lack the stromal, immune, vascular, and neural components of the intact airway wall. We advocate for transparency about these limitations and application-specific characterisation of models before their use in translational contexts.
-      </div>
-
-      <h2>Our approach</h2>
-      <p>At EpiCENTR, we use a combination of two-dimensional basal cell cultures, tracheosphere/organoid systems, and ALI cultures depending on the question being asked. We have developed <a href="https://doi.org/10.1152/ajplung.00047.2024" target="_blank" rel="noopener noreferrer">lentiviral tools for studying airway epithelial differentiation</a> that are compatible with these systems and available via Addgene.
-    </article>
-
-    <!-- ════════════════════════════════
-         PANEL 4 — Cell & Gene Therapy
-    ════════════════════════════════ -->
-    <article class="info-panel" id="panel-cell-gene-therapy"
-      data-title="Cell and Gene Therapy for Airway Disease | Epithelial Regeneration | EpiCENTR"
-      data-description="Cell and gene therapy approaches offer the prospect of repairing or replacing diseased airway epithelium. Learn about the biological rationale, the challenges of ex vivo expansion and delivery, and the current state of the field.">
-
-      <div class="info-breadcrumb">
-        <a href="index.html">EpiCENTR</a><span>›</span> Information <span>›</span> Cell &amp; gene therapy
-      </div>
-
-      <img src="info-cell-gene-therapy.png" alt="Illustration of cell and gene therapy approach for airway disease" class="info-hero-img" onerror="this.style.display='none'">
-
-      <h1>Cell and gene therapy for airway disease</h1>
-      <p class="panel-subtitle">Correcting the airway epithelium through regeneration</p>
-
-      <p>Current treatments for most airway diseases manage symptoms or slow progression — they do not restore functional lung tissue. This limitation is particularly acute for patients with genetic diseases that disrupt the structural integrity of the airway epithelium. For these individuals, a therapy that could repair or replace the diseased epithelium at the cellular level represents a meaningful therapeutic goal.</p>
-      <p>The biological logic of airway cell therapy rests on the properties of <button class="inline-topic-link" data-topic="basal-cells">airway basal cells</button> — the stem cell population of the proximal airway. Basal cells can self-renew, generate all the differentiated cell types of the airway epithelium, and, crucially, could be expanded and manipulated outside the body before being returned to the patient.</p>
-
-      <h2>The cell therapy concept</h2>
-      <p>An autologous cell therapy approach involves taking a small biopsy of the patient's own airway epithelium, isolating and expanding the basal stem cells <i>ex vivo</i>, and then delivering the expanded cells to the site of disease. Because the cells are derived from the patient themselves, they do not carry the immunological risks associated with donor-derived cell therapies.</p>
-      <p>Combined with gene therapy, this concept becomes more powerful for genetic diseases. If the patient's own basal cells carry a disease-causing variant, that variant can in principle be corrected <i>in vitro</i> — using a viral vector to deliver a functional copy of the affected gene, or using gene editing approaches — before the corrected cells are returned to the patient. The skin epithelium has provided important precedent for this combined approach, with genetically corrected epidermal stem cells demonstrating durable engraftment and functional restoration in patients with junctional epidermolysis bullosa. Our work on <button class="inline-topic-link" data-topic="eb">epidermolysis bullosa and the airway</button> demonstrates proof of concept for applying a similar strategy for airways.</p>
-
-      <h2>The challenge of <i>ex vivo</i> expansion</h2>
-      <p>Scalable <i>ex vivo</i> expansion of airway basal cells is a prerequisite for any cell therapy application. The number of cells required to cover a clinically meaningful area of diseased airway is substantial, and the biopsy material available from patients — particularly children — is limited. Over the past decade, culture methods have improved considerably, and we have recently reported a <a href="https://doi.org/10.1101/2025.09.15.675861" target="_blank" rel="noopener noreferrer">new approach using WS6 for scalable ex vivo expansion and gene editing of human basal epithelial cells</a> that builds on this progress.</p>
-
-      <h2>Lentiviral gene delivery</h2>
-      <p>Lentiviral vectors are the most clinically advanced tool for stable gene delivery to dividing cells. They integrate into the host genome, providing durable transgene expression as cells divide. The principal safety consideration for lentiviral approaches is insertional mutagenesis: integration near proto-oncogenes could, in principle, dysregulate their expression. Modern self-inactivating (SIN) lentiviral vector designs substantially reduce this risk, and clinical experience in haematopoietic stem cell gene therapy has established a favourable safety profile. Nonetheless, robust safety testing of corrected cell products before any clinical application is essential.
-
-      <h2>Delivering cells to the airway</h2>
-      <p>Beyond expansion and genetic modification, a major practical challenge is delivering cells to the appropriate anatomical site in sufficient numbers, and achieving durable engraftment. The airway is a challenging delivery environment — mucociliary clearance actively removes material from the luminal surface, and the existing epithelium must be partially disrupted to allow incoming cells access to the basement membrane.</p>
-
-      <h2>Where the field is heading</h2>
-      <p>The tools available for airway epithelial cell therapy — methods for expansion, genetic modification, and delivery — are improving rapidly. Gene editing technologies including base editing and prime editing offer the prospect of precise correction of pathogenic variants. Increasingly defined culture conditions are making clinical-grade cell production more tractable. Improved understanding of the signals that govern basal cell engraftment and differentiation <i>in vivo</i> may identify interventions that enhance the efficiency of cell delivery. At EpiCENTR, we are working on each of these challenges, with the goal of progressing regenerative therapies for airway disease to the clinic for children affected by rare airway diseases.</p>
-    </article>
-
-    <!-- ════════════════════════════════
-         PANEL 5 — Regeneration
-    ════════════════════════════════ -->
-    <article class="info-panel" id="panel-regeneration"
-      data-title="Airway Epithelial Regeneration | Lung Disease and Repair | EpiCENTR"
-      data-description="The airway epithelium is damaged in many common and rare lung diseases. Learn how the respiratory epithelium repairs itself after injury, why this process can fail, and what regenerative medicine approaches might offer.">
-
-      <div class="info-breadcrumb">
-        <a href="index.html">EpiCENTR</a><span>›</span> Information <span>›</span> Airway Epithelial Regeneration
-      </div>
-
-      <img src="info-regeneration.png" alt="Illustration of airway epithelial regeneration following injury" class="info-hero-img" onerror="this.style.display='none'">
-
-      <h1>Airway epithelial regeneration in lung disease</h1>
-      <p class="panel-subtitle">Understanding normal repair improves our understanding of disease</p>
-
-      <p>Lung disease is a major and growing cause of morbidity and mortality globally, affecting approximately 7–8% of the world's population at any time. Diseases of the airways — including asthma, chronic obstructive pulmonary disease (COPD), cystic fibrosis, primary ciliary dyskinesia, and rarer genetic conditions — all involve disruption to the airway epithelium, the cellular barrier that lines the respiratory tract and defends it against inhaled injury.</p>
-      
-      <h2>The normal repair response</h2>
-      <p>Unlike the skin or gut, where epithelial turnover is more rapid and regenerative capacity is high, the airway epithelium turns over relatively slowly under normal conditions. However, following epithelial injury — whether from a respiratory virus, inhaled toxicant, or physical trauma — <button class="inline-topic-link" data-topic="basal-cells">airway basal cells</button> rapidly activate a wound healing programme. Basal cells at the wound edge spread and migrate to cover the denuded area, then proliferate to restore cell density, and finally differentiate to regenerate the mucociliary epithelium. This process is regulated by a network of signalling pathways, including Wnt, Notch, and epidermal growth factor receptor (EGFR) signalling, and involves interactions between epithelial cells and surrounding extracellular matrix and stromal cells.</p>
-
-      <h2>When regeneration fails: chronic lung disease</h2>
-      <p>In chronic lung diseases, the normal repair programme is disrupted. In COPD, repeated cycles of injury — caused by cigarette smoke and air pollution — lead to structural remodelling of the airway wall, with increased proportions of secretory cells at the expense of ciliated cells (goblet cell metaplasia), impaired mucociliary clearance, and, in severe disease, loss of small airway epithelial integrity. Basal cells from COPD donors demonstrate impaired differentiation capacity <i>in vitro</i>, suggesting a cell-intrinsic contribution to the regenerative deficit.</p>
-      <p>In asthma, epithelial fragility and aberrant repair contribute to airway remodelling and the cycle of chronic inflammation. In cystic fibrosis, the primary defect is loss of functional CFTR — the chloride channel whose absence disrupts airway surface liquid homeostasis and impairs mucociliary clearance. The resulting mucus plugging and chronic infection cause progressive epithelial damage. Primary ciliary dyskinesia (PCD) is a genetic disorder affecting the structure or function of cilia produced by differentiating basal cells, with the functional consequence of impaired clearance despite an intact regenerative response.</p>
-
-      <h2>Viral infection and epithelial repair</h2>
-      <p>Respiratory viral infections are among the most common triggers of acute airway epithelial damage. Influenza, respiratory syncytial virus (RSV), and rhinovirus all cause desquamation of the differentiated epithelium, requiring basal cell-mediated repair for recovery. The severity of infection — and the duration of symptoms — is partly a function of how effectively the epithelium is regenerated.</p>
-
-      <h2>Ageing and regenerative decline</h2>
-      <p>The efficiency of airway epithelial regeneration declines with age. Aged basal cells demonstrate reduced proliferative capacity and altered differentiation. Understanding the molecular basis of this decline — and whether it can be reversed or slowed — is relevant both to age-related lung disease and to the design of regenerative therapies for older patients. At EpiCENTR, we are investigating how age-associated changes in basal cell identity and function contribute to impaired regeneration, including the roles of transcription factors such as p63 and structural determinants such as the hemidesmosome complex.</p>
-
-      <h2>What regenerative medicine might offer</h2>
-      <p>For most chronic lung diseases, the therapeutic goal is currently to slow progression and manage symptoms. No approved therapy has yet demonstrated the ability to reverse established disease. Regenerative approaches — whether through stimulation of endogenous repair pathways, delivery of exogenous stem cells, or gene correction of patient-derived cells — offer a longer-term prospect of restoring functional epithelium rather than simply managing its decline. At EpiCENTR, our work on <button class="inline-topic-link" data-topic="basal-cells">airway basal cell biology</button>, <button class="inline-topic-link" data-topic="organoids">in vitro airway models</button>, and <button class="inline-topic-link" data-topic="cell-gene-therapy">cell and gene therapy</button> is directed towards making this prospect a reality for children and adults with airway diseases.</p>
-    </article>
-
-  </main>
+  </div>
 </div>
 
 <footer>
   <p>© EpiCENTR Lab 2026</p>
 </footer>
-
-<script>
-(function () {
-  const topics = {
-    'basal-cells':       { panelId: 'panel-basal-cells' },
-    'eb':                { panelId: 'panel-eb' },
-    'organoids':         { panelId: 'panel-organoids' },
-    'cell-gene-therapy': { panelId: 'panel-cell-gene-therapy' },
-    'regeneration':      { panelId: 'panel-regeneration' }
-  };
-
-  const sidebarButtons = document.querySelectorAll('.sidebar-nav button[data-topic]');
-  const dropdownLinks  = document.querySelectorAll('#dropdown-menu a[data-topic]');
-  const panels         = document.querySelectorAll('.info-panel');
-
-  function activateTopic(key) {
-    if (!topics[key]) key = 'basal-cells';
-
-    // panels
-    panels.forEach(p => p.classList.remove('active'));
-    const panel = document.getElementById(topics[key].panelId);
-    if (panel) {
-      panel.classList.add('active');
-      // update page title & meta description for SEO/history
-      const t = panel.dataset.title;
-      const d = panel.dataset.description;
-      if (t) document.title = t;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta && d) meta.setAttribute('content', d);
-    }
-
-    // sidebar
-    sidebarButtons.forEach(b => b.classList.toggle('active', b.dataset.topic === key));
-
-    // dropdown
-    dropdownLinks.forEach(a => a.classList.toggle('active-topic', a.dataset.topic === key));
-
-    // update URL without reload
-    const url = new URL(window.location);
-    url.searchParams.set('topic', key);
-    history.replaceState(null, '', url);
-
-    // scroll content to top on mobile
-    if (window.innerWidth <= 750) {
-      document.querySelector('.info-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  // sidebar buttons
-  sidebarButtons.forEach(btn => {
-    btn.addEventListener('click', () => activateTopic(btn.dataset.topic));
-  });
-
-  // dropdown links — intercept to avoid full reload
-  dropdownLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      activateTopic(link.dataset.topic);
-    });
-  });
-
-  // inline cross-links within panel text
-  document.querySelectorAll('.inline-topic-link').forEach(btn => {
-    btn.style.cssText = [
-      'background:none', 'border:none', 'padding:0',
-      'font-family:inherit', 'font-size:inherit',
-      'color:#3f8f8c', 'cursor:pointer',
-      'border-bottom:1px solid rgba(63,143,140,0.4)',
-      'line-height:inherit'
-    ].join(';');
-    btn.addEventListener('click', () => {
-      activateTopic(btn.dataset.topic);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    btn.addEventListener('mouseenter', () => btn.style.borderBottomColor = '#3f8f8c');
-    btn.addEventListener('mouseleave', () => btn.style.borderBottomColor = 'rgba(63,143,140,0.4)');
-  });
-
-  // read ?topic= from URL on load
-  const params = new URLSearchParams(window.location.search);
-  const initial = params.get('topic') || 'basal-cells';
-  activateTopic(initial);
-})();
-</script>
 
 </body>
 </html>
