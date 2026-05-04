@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airway Organoids and In Vitro Lung Models | EpiCENTR Lab, UCL</title>
+  <meta name="description" content="Airway organoids and air-liquid interface cultures are powerful tools for studying the respiratory epithelium. Learn how these human cell models are built, what questions they can address, and what their limitations are." />
+  <link rel="canonical" href="https://www.epicentrlab.org/airway-organoids.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSZGBZY37P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSZGBZY37P');
+  </script>
+
+  <style>
+  /* ── NAV ── */
+  .nav { padding-left:36px; padding-right:36px; flex-wrap:nowrap; }
+  .nav-right { display:flex; align-items:center; flex-wrap:nowrap; white-space:nowrap; }
+  .nav-right a, .nav-right .nav-dropdown { margin-left:22px; }
+  .nav-dropdown { position:relative; display:inline-flex; align-items:center; }
+  .nav-dropdown > a { display:inline-flex; align-items:center; gap:3px; margin-left:0; }
+  .nav-dropdown > a::after { content:"▾"; font-size:10px; opacity:0.6; }
+  .dropdown-menu {
+    display:none; position:absolute; top:100%; right:0; left:auto;
+    background:#f2f0ec; border:1px solid #e6e6e6; border-radius:12px;
+    padding:20px 0 8px; box-shadow:0 8px 28px rgba(0,0,0,0.10); z-index:2000;
+  }
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu { display:block; }
+  .dropdown-menu a {
+    display:block; padding:10px 20px; margin:0; font-size:14px;
+    color:#4f3b78; text-decoration:none; white-space:nowrap;
+  }
+  .dropdown-menu a:hover { background:rgba(79,59,120,0.07); opacity:1; }
+  .dropdown-menu a.current { font-weight:600; background:rgba(79,59,120,0.10); }
+
+  /* ── INFO PAGE LAYOUT ── */
+  .info-layout {
+    display:grid; grid-template-columns:220px 1fr; gap:0;
+    max-width:1080px; margin:60px auto 120px; padding:0 20px; align-items:start;
+  }
+  .info-sidebar { position:sticky; top:90px; padding-right:40px; }
+  .info-sidebar h2 {
+    font-size:11px; font-weight:600; letter-spacing:0.12em;
+    text-transform:uppercase; color:#999; margin:0 0 16px;
+  }
+  .sidebar-nav { list-style:none; margin:0; padding:0; }
+  .sidebar-nav li { margin-bottom:4px; }
+  .sidebar-nav a {
+    display:block; padding:9px 14px; font-family:inherit; font-size:14.5px;
+    color:#4f3b78; border-radius:8px; text-decoration:none; line-height:1.35;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar-nav a:hover { background:rgba(79,59,120,0.07); }
+  .sidebar-nav a.active { background:#4f3b78; color:#f2f0ec; font-weight:500; }
+  .info-content { min-width:0; border-left:1px solid #e6e6e6; padding-left:52px; }
+  .info-hero-img {
+    width:100%; max-height:320px; object-fit:cover;
+    border-radius:18px; display:block; margin-bottom:36px;
+  }
+  .info-panel h1 {
+    font-size:30px; font-weight:500; letter-spacing:-0.02em;
+    color:#2b2b2b; margin:0 0 6px;
+  }
+  .panel-subtitle { font-size:17px; color:#3f8f8c; margin:0 0 32px; }
+  .info-panel h2 {
+    position:relative; font-size:19px; font-weight:600; color:#4f3b78;
+    margin:40px 0 14px; padding-bottom:10px; letter-spacing:-0.01em;
+  }
+  .info-panel h2::after {
+    content:""; position:absolute; bottom:0; left:0;
+    width:32px; height:2px; background:#6c5aa0;
+  }
+  .info-panel p { margin:0 0 18px; line-height:1.7; }
+  .info-panel a { color:#3f8f8c; text-decoration:none; border-bottom:1px solid rgba(63,143,140,0.4); }
+  .info-panel a:hover { border-bottom-color:#3f8f8c; }
+  .caveat {
+    background:rgba(63,143,140,0.08); border-left:3px solid #3f8f8c;
+    border-radius:0 10px 10px 0; padding:14px 18px; margin:28px 0;
+    font-size:15px; line-height:1.65; color:#2b2b2b;
+  }
+  .caveat strong { color:#3f8f8c; }
+  .info-breadcrumb { font-size:13px; color:#999; margin-bottom:28px; }
+  .info-breadcrumb a { color:#999; text-decoration:none; border-bottom:none; }
+  .info-breadcrumb a:hover { color:#4f3b78; }
+  .info-breadcrumb span { margin:0 6px; }
+  @media (max-width:750px) {
+    .info-layout { grid-template-columns:1fr; margin-top:30px; }
+    .info-sidebar { position:static; padding-right:0; margin-bottom:32px; }
+    .info-sidebar h2 { display:none; }
+    .sidebar-nav { display:flex; flex-wrap:wrap; gap:8px; }
+    .sidebar-nav li { margin-bottom:0; }
+    .sidebar-nav a {
+      width:auto; padding:7px 14px; border:1px solid #d9d9d9;
+      border-radius:999px; font-size:13.5px;
+    }
+    .sidebar-nav a.active { border-color:#4f3b78; }
+    .info-content { border-left:none; padding-left:0; border-top:1px solid #e6e6e6; padding-top:32px; }
+  }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-left"><a href="index.html">EpiCENTR</a></div>
+  <nav class="nav-right">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#people">The Team</a>
+    <a href="index.html#publications">Publications</a>
+    <a href="index.html#resources">Resources</a>
+    <a href="index.html#gallery">Gallery</a>
+    <div class="nav-dropdown">
+      <a href="information.html" class="active">Information</a>
+      <div class="dropdown-menu">
+        <a href="airway-basal-cells.html">Airway Basal Cells</a>
+        <a href="epidermolysis-bullosa.html">Epidermolysis Bullosa &amp; the Airway</a>
+        <a href="airway-organoids.html" class="current">Airway Organoids &amp; <i>In Vitro</i> Models</a>
+        <a href="cell-gene-therapy.html">Cell &amp; Gene Therapy</a>
+        <a href="airway-epithelial-regeneration.html">Airway Epithelial Regeneration</a>
+      </div>
+    </div>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="info-layout">
+
+  <aside class="info-sidebar">
+    <h2>Topics</h2>
+    <ul class="sidebar-nav">
+      <li><a href="airway-basal-cells.html">Airway Basal Cells</a></li>
+      <li><a href="epidermolysis-bullosa.html">Epidermolysis Bullosa &amp; the Airway</a></li>
+      <li><a href="airway-organoids.html" class="active">Airway Organoids &amp; <i>In Vitro</i> Models</a></li>
+      <li><a href="cell-gene-therapy.html">Cell &amp; Gene Therapy for Airway Disease</a></li>
+      <li><a href="airway-epithelial-regeneration.html">Airway Epithelial Regeneration in Lung Disease</a></li>
+    </ul>
+  </aside>
+
+  <main class="info-content">
+    <article class="info-panel">
+
+      <div class="info-breadcrumb">
+        <a href="index.html">EpiCENTR</a><span>›</span>
+        <a href="information.html">Information</a><span>›</span>
+        Airway Organoids &amp; <i>In Vitro</i> Models
+      </div>
+
+      <img src="info-organoid.jpg" alt="Illustration of airway organoid culture system" class="info-hero-img" onerror="this.style.display='none'">
+
+      <h1>Airway organoids &amp; <i>in vitro</i> models of the lung</h1>
+      <p class="panel-subtitle">Creating a model of the airway outside the body</p>
+
+      <p>Understanding how the human airway functions — and how it changes in disease — requires models that accurately recapitulate its biology. Animal models have provided important insights, but there are well-recognised differences between rodent and human respiratory biology that limit translation. Human cell models of the airway, including air&#x2013;liquid interface (ALI) cultures and organoids, offer an important alternative.</p>
+
+<h2>Air&#x2013;liquid interface cultures</h2>
+<p>The best-established <em>in vitro</em> model of the mucociliary airway epithelium is the air&#x2013;liquid interface culture. In this system, airway basal cells are seeded onto a porous membrane support and submerged in culture medium until they form a confluent monolayer. The medium is then removed from the apical surface, exposing the cells to air. Over the following two to four weeks, this air exposure drives differentiation: basal cells generate ciliated cells and mucosecretory cells, producing a pseudostratified epithelium with mucociliary activity that resembles the human airway <em>in vivo</em>.</p>
+<p>ALI cultures can be established from basal cells derived from donors with different disease backgrounds — including cystic fibrosis, COPD or primary ciliary dyskinesia — enabling direct comparison of healthy and diseased epithelia. They are widely used for studies of host&#x2013;pathogen interactions, drug toxicity, and mucociliary function.</p>
+
+<h2>Organoids and tracheospheres</h2>
+<p>Three-dimensional organoid cultures provide a complementary approach. When airway basal cells are embedded in an extracellular matrix and cultured in the absence of a supporting surface, they self-organise into spherical structures — variously termed tracheospheres, bronchospheres, or simply airway organoids — that contain basal, ciliated, and secretory cells arranged around a central lumen.</p>
+<p>The key advantage of organoid systems is that they capture aspects of the three-dimensional organisation and cell&#x2013;cell interactions of the tissue of origin that are absent in flat, two-dimensional cultures. They are also amenable to quantitative assays — colony formation efficiency, organoid size, and ciliary beat frequency can all be measured systematically — making them well-suited to screens for compounds that modulate basal cell behaviour. We have used this approach to <a href="https://doi.org/10.1242/jcs.263487" target="_blank" rel="noopener noreferrer">identify Wnt signalling pathway activators as pro-proliferative compounds in airway basal cells</a>.</p>
+
+<div class="caveat">
+  <strong>On consensus in the field:</strong> The question of how closely human airway organoids recapitulate the tissue of origin — and which culture conditions best support physiologically relevant differentiation — is unresolved. Most current airway organoids also lack the stromal, immune, vascular, and neural components of the intact airway wall. We advocate for transparency about these limitations and application-specific characterisation of models before their use in translational contexts.
+</div>
+
+<h2>Our approach</h2>
+<p>At EpiCENTR, we use a combination of two-dimensional basal cell cultures, tracheosphere/organoid systems, and ALI cultures depending on the question being asked. We have developed <a href="https://doi.org/10.1152/ajplung.00047.2024" target="_blank" rel="noopener noreferrer">lentiviral tools for studying airway epithelial differentiation</a> that are compatible with these systems and available via <a href="https://www.addgene.org/Rob_Hynds/" target="_blank" rel="noopener noreferrer">Addgene</a>. Our datasets from primary human airway basal cells are accessible via <a href="https://www.ncbi.nlm.nih.gov/gds/?term=Hynds+RE%5BAuthor%5D" target="_blank" rel="noopener noreferrer">GEO</a>.</p>
+
+    </article>
+  </main>
+</div>
+
+<footer>
+  <p>© EpiCENTR Lab 2026</p>
+</footer>
+
+</body>
+</html>
