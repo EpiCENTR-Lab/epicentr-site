@@ -20,16 +20,38 @@
   gtag('config', 'G-RSZGBZY37P');
 </script>
 
-  <style>
+<style>
+/* ── NAV: keep everything on one line ── */
+.nav {
+  padding-left: 36px;
+  padding-right: 36px;
+  flex-wrap: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.nav-right a,
+.nav-right .nav-dropdown {
+  margin-left: 22px;
+}
+
 /* ── INFORMATION DROPDOWN ── */
 .nav-dropdown {
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .nav-dropdown > a {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
+  margin-left: 0;
 }
 
 .nav-dropdown > a::after {
@@ -41,9 +63,10 @@
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  min-width: 240px;
+  top: calc(100% + 14px);
+  left: 0;
+  right: auto;
+  min-width: 250px;
   background: #f2f0ec;
   border: 1px solid #e6e6e6;
   border-radius: 12px;
@@ -96,6 +119,8 @@
     <a href="information.html?topic=regeneration">Airway Epithelial Regeneration</a>
   </div>
 </div>
+
+<a href="#contact">Contact</a>
     </nav>
 </header>
 
