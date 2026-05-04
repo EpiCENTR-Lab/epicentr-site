@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cell and Gene Therapy for Airway Disease | Epithelial Regeneration | EpiCENTR</title>
+  <meta name="description" content="Cell and gene therapy approaches offer the prospect of repairing or replacing diseased airway epithelium. Learn about the biological rationale, the challenges of ex vivo expansion and delivery, and the current state of the field." />
+  <link rel="canonical" href="https://www.epicentrlab.org/cell-gene-therapy.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSZGBZY37P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSZGBZY37P');
+  </script>
+
+  <style>
+  /* ── NAV ── */
+  .nav { padding-left:36px; padding-right:36px; flex-wrap:nowrap; }
+  .nav-right { display:flex; align-items:center; flex-wrap:nowrap; white-space:nowrap; }
+  .nav-right a, .nav-right .nav-dropdown { margin-left:22px; }
+  .nav-dropdown { position:relative; display:inline-flex; align-items:center; }
+  .nav-dropdown > a { display:inline-flex; align-items:center; gap:3px; margin-left:0; }
+  .nav-dropdown > a::after { content:"▾"; font-size:10px; opacity:0.6; }
+  .dropdown-menu {
+    display:none; position:absolute; top:100%; right:0; left:auto;
+    background:#f2f0ec; border:1px solid #e6e6e6; border-radius:12px;
+    padding:20px 0 8px; box-shadow:0 8px 28px rgba(0,0,0,0.10); z-index:2000;
+  }
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu { display:block; }
+  .dropdown-menu a {
+    display:block; padding:10px 20px; margin:0; font-size:14px;
+    color:#4f3b78; text-decoration:none; white-space:nowrap;
+  }
+  .dropdown-menu a:hover { background:rgba(79,59,120,0.07); opacity:1; }
+  .dropdown-menu a.current { font-weight:600; background:rgba(79,59,120,0.10); }
+
+  /* ── INFO PAGE LAYOUT ── */
+  .info-layout {
+    display:grid; grid-template-columns:220px 1fr; gap:0;
+    max-width:1080px; margin:60px auto 120px; padding:0 20px; align-items:start;
+  }
+  .info-sidebar { position:sticky; top:90px; padding-right:40px; }
+  .info-sidebar h2 {
+    font-size:11px; font-weight:600; letter-spacing:0.12em;
+    text-transform:uppercase; color:#999; margin:0 0 16px;
+  }
+  .sidebar-nav { list-style:none; margin:0; padding:0; }
+  .sidebar-nav li { margin-bottom:4px; }
+  .sidebar-nav a {
+    display:block; padding:9px 14px; font-family:inherit; font-size:14.5px;
+    color:#4f3b78; border-radius:8px; text-decoration:none; line-height:1.35;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar-nav a:hover { background:rgba(79,59,120,0.07); }
+  .sidebar-nav a.active { background:#4f3b78; color:#f2f0ec; font-weight:500; }
+  .info-content { min-width:0; border-left:1px solid #e6e6e6; padding-left:52px; }
+  .info-hero-img {
+    width:100%; max-height:320px; object-fit:cover;
+    border-radius:18px; display:block; margin-bottom:36px;
+  }
+  .info-panel h1 {
+    font-size:30px; font-weight:500; letter-spacing:-0.02em;
+    color:#2b2b2b; margin:0 0 6px;
+  }
+  .panel-subtitle { font-size:17px; color:#3f8f8c; margin:0 0 32px; }
+  .info-panel h2 {
+    position:relative; font-size:19px; font-weight:600; color:#4f3b78;
+    margin:40px 0 14px; padding-bottom:10px; letter-spacing:-0.01em;
+  }
+  .info-panel h2::after {
+    content:""; position:absolute; bottom:0; left:0;
+    width:32px; height:2px; background:#6c5aa0;
+  }
+  .info-panel p { margin:0 0 18px; line-height:1.7; }
+  .info-panel a { color:#3f8f8c; text-decoration:none; border-bottom:1px solid rgba(63,143,140,0.4); }
+  .info-panel a:hover { border-bottom-color:#3f8f8c; }
+  .caveat {
+    background:rgba(63,143,140,0.08); border-left:3px solid #3f8f8c;
+    border-radius:0 10px 10px 0; padding:14px 18px; margin:28px 0;
+    font-size:15px; line-height:1.65; color:#2b2b2b;
+  }
+  .caveat strong { color:#3f8f8c; }
+  .info-breadcrumb { font-size:13px; color:#999; margin-bottom:28px; }
+  .info-breadcrumb a { color:#999; text-decoration:none; border-bottom:none; }
+  .info-breadcrumb a:hover { color:#4f3b78; }
+  .info-breadcrumb span { margin:0 6px; }
+  @media (max-width:750px) {
+    .info-layout { grid-template-columns:1fr; margin-top:30px; }
+    .info-sidebar { position:static; padding-right:0; margin-bottom:32px; }
+    .info-sidebar h2 { display:none; }
+    .sidebar-nav { display:flex; flex-wrap:wrap; gap:8px; }
+    .sidebar-nav li { margin-bottom:0; }
+    .sidebar-nav a {
+      width:auto; padding:7px 14px; border:1px solid #d9d9d9;
+      border-radius:999px; font-size:13.5px;
+    }
+    .sidebar-nav a.active { border-color:#4f3b78; }
+    .info-content { border-left:none; padding-left:0; border-top:1px solid #e6e6e6; padding-top:32px; }
+  }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-left"><a href="index.html">EpiCENTR</a></div>
+  <nav class="nav-right">
+    <a href="index.html#research">Research</a>
+    <a href="index.html#people">The Team</a>
+    <a href="index.html#publications">Publications</a>
+    <a href="index.html#resources">Resources</a>
+    <a href="index.html#gallery">Gallery</a>
+    <div class="nav-dropdown">
+      <a href="information.html" class="active">Information</a>
+      <div class="dropdown-menu">
+        <a href="airway-basal-cells.html">Airway Basal Cells</a>
+        <a href="epidermolysis-bullosa.html">Epidermolysis Bullosa &amp; the Airway</a>
+        <a href="airway-organoids.html">Airway Organoids &amp; <i>In Vitro</i> Models</a>
+        <a href="cell-gene-therapy.html" class="current">Cell &amp; Gene Therapy</a>
+        <a href="airway-epithelial-regeneration.html">Airway Epithelial Regeneration</a>
+      </div>
+    </div>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="info-layout">
+
+  <aside class="info-sidebar">
+    <h2>Topics</h2>
+    <ul class="sidebar-nav">
+      <li><a href="airway-basal-cells.html">Airway Basal Cells</a></li>
+      <li><a href="epidermolysis-bullosa.html">Epidermolysis Bullosa &amp; the Airway</a></li>
+      <li><a href="airway-organoids.html">Airway Organoids &amp; <i>In Vitro</i> Models</a></li>
+      <li><a href="cell-gene-therapy.html" class="active">Cell &amp; Gene Therapy for Airway Disease</a></li>
+      <li><a href="airway-epithelial-regeneration.html">Airway Epithelial Regeneration in Lung Disease</a></li>
+    </ul>
+  </aside>
+
+  <main class="info-content">
+    <article class="info-panel">
+
+      <div class="info-breadcrumb">
+        <a href="index.html">EpiCENTR</a><span>›</span>
+        <a href="information.html">Information</a><span>›</span>
+        Cell &amp; Gene Therapy
+      </div>
+
+      <img src="info-cell-gene-therapy.png" alt="Illustration of cell and gene therapy approach for airway disease" class="info-hero-img" onerror="this.style.display='none'">
+
+      <h1>Cell and gene therapy for airway disease</h1>
+      <p class="panel-subtitle">Correcting the airway epithelium through regeneration</p>
+
+      <p>Current treatments for most airway diseases manage symptoms or slow progression — they do not restore functional lung tissue. This limitation is particularly acute for patients with genetic diseases that disrupt the structural integrity of the airway epithelium. For these individuals, a therapy that could repair or replace the diseased epithelium at the cellular level represents a meaningful therapeutic goal.</p>
+<p>The biological logic of airway cell therapy rests on the properties of <a href="airway-basal-cells.html">airway basal cells</a> — the stem cell population of the proximal airway. Basal cells can self-renew, generate all the differentiated cell types of the airway epithelium, and, crucially, can be expanded and manipulated outside the body before being returned to the patient.</p>
+
+<h2>The cell therapy concept</h2>
+<p>An autologous cell therapy approach involves taking a small biopsy of the patient's own airway epithelium, isolating and expanding the basal stem cells <em>ex vivo</em>, and then delivering the expanded cells to the site of disease. Because the cells are derived from the patient themselves, they do not carry the immunological risks associated with donor-derived cell therapies.</p>
+<p>Combined with gene therapy, this concept becomes more powerful for genetic diseases. If the patient's own basal cells carry a disease-causing variant, that variant can in principle be corrected <em>in vitro</em> — using a viral vector to deliver a functional copy of the affected gene, or using gene editing approaches — before the corrected cells are returned to the patient. The skin epithelium has provided important precedent for this combined approach, with genetically corrected epidermal stem cells demonstrating durable engraftment and functional restoration in patients with junctional epidermolysis bullosa. Our work on <a href="epidermolysis-bullosa.html">epidermolysis bullosa and the airway</a> demonstrates proof of concept for applying a similar strategy for airways.</p>
+
+<h2>The challenge of <em>ex vivo</em> expansion</h2>
+<p>Scalable <em>ex vivo</em> expansion of airway basal cells is a prerequisite for any cell therapy application. The number of cells required to cover a clinically meaningful area of diseased airway is substantial, and the biopsy material available from patients — particularly children — is limited. Over the past decade, culture methods have improved considerably, and we have recently reported a <a href="https://doi.org/10.1101/2025.09.15.675861" target="_blank" rel="noopener noreferrer">new approach using WS6 for scalable <em>ex vivo</em> expansion and gene editing of human basal epithelial cells</a> that builds on this progress.</p>
+
+<h2>Lentiviral gene delivery</h2>
+<p>Lentiviral vectors are the most clinically advanced tool for stable gene delivery to dividing cells. They integrate into the host genome, providing durable transgene expression as cells divide. The principal safety consideration for lentiviral approaches is insertional mutagenesis: integration near proto-oncogenes could, in principle, dysregulate their expression. Modern self-inactivating (SIN) lentiviral vector designs substantially reduce this risk, and clinical experience in haematopoietic stem cell gene therapy has established a favourable safety profile. Nonetheless, robust safety testing of corrected cell products before any clinical application is essential. We have developed <a href="https://doi.org/10.1152/ajplung.00047.2024" target="_blank" rel="noopener noreferrer">lentiviral tools for airway epithelial research</a> available via <a href="https://www.addgene.org/Rob_Hynds/" target="_blank" rel="noopener noreferrer">Addgene</a>.</p>
+
+<h2>Delivering cells to the airway</h2>
+<p>Beyond expansion and genetic modification, a major practical challenge is delivering cells to the appropriate anatomical site in sufficient numbers, and achieving durable engraftment. The airway is a challenging delivery environment — mucociliary clearance actively removes material from the luminal surface, and the existing epithelium must be partially disrupted to allow incoming cells access to the basement membrane.</p>
+
+<div class="caveat">
+  <strong>On the state of the field:</strong> Airway cell therapy has a complicated recent history. High-profile clinical programmes involving tracheal bioengineering with decellularised scaffolds ultimately did not demonstrate the anticipated clinical benefit and raised important questions about the readiness of the technology. This experience underscores the importance of rigorous preclinical validation and honest appraisal of what the evidence currently supports. We are committed to this standard in our own work.
+</div>
+
+<h2>Where the field is heading</h2>
+<p>The tools available for airway epithelial cell therapy — methods for expansion, genetic modification, and delivery — are improving rapidly. Gene editing technologies including base editing and prime editing offer the prospect of precise correction of pathogenic variants. Increasingly defined culture conditions are making clinical-grade cell production more tractable. Improved understanding of the signals that govern basal cell engraftment and differentiation <em>in vivo</em> may identify interventions that enhance the efficiency of cell delivery. At EpiCENTR, we are working on each of these challenges, with the goal of progressing regenerative therapies for airway disease to the clinic for children affected by rare airway diseases.</p>
+
+    </article>
+  </main>
+</div>
+
+<footer>
+  <p>© EpiCENTR Lab 2026</p>
+</footer>
+
+</body>
+</html>
