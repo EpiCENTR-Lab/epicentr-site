@@ -24,15 +24,40 @@
   </script>
 
   <style>
+    /* ── NAV: keep everything on one line ── */
+
+    /* Tighten padding and spacing so all 7 items fit */
+    .nav {
+      padding-left: 36px;
+      padding-right: 36px;
+      flex-wrap: nowrap;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+
+    .nav-right a,
+    .nav-right .nav-dropdown {
+      margin-left: 22px;
+    }
+
     /* ── DROPDOWN NAV ── */
     .nav-dropdown {
       position: relative;
+      /* inline-flex so the chevron sits flush with the link text */
+      display: inline-flex;
+      align-items: center;
     }
 
     .nav-dropdown > a {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      margin-left: 0; /* spacing handled by .nav-dropdown margin above */
     }
 
     .nav-dropdown > a::after {
@@ -44,9 +69,12 @@
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: calc(100% + 12px);
-      right: 0;
-      min-width: 240px;
+      /* sit directly below the nav bar */
+      top: calc(100% + 14px);
+      /* align left edge of menu to left edge of trigger */
+      left: 0;
+      right: auto;
+      min-width: 250px;
       background: #f2f0ec;
       border: 1px solid #e6e6e6;
       border-radius: 12px;
@@ -67,7 +95,6 @@
       font-size: 14px;
       color: #4f3b78;
       text-decoration: none;
-      border-radius: 0;
       white-space: nowrap;
     }
 
