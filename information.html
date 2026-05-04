@@ -69,16 +69,17 @@
     .dropdown-menu {
       display: none;
       position: absolute;
-      /* sit directly below the nav bar */
-      top: calc(100% + 14px);
-      /* align left edge of menu to left edge of trigger */
+      /* flush to the bottom of the nav-dropdown — no gap to lose hover over */
+      top: 100%;
       left: 0;
       right: auto;
       min-width: 250px;
       background: #f2f0ec;
       border: 1px solid #e6e6e6;
       border-radius: 12px;
-      padding: 8px 0;
+      /* push the visible box down with padding-top instead of a gap,
+         so the hover area is continuous from trigger to menu items */
+      padding: 20px 0 8px;
       box-shadow: 0 8px 28px rgba(0,0,0,0.10);
       z-index: 2000;
     }
@@ -353,11 +354,11 @@
     <div class="nav-dropdown">
       <a href="information.html" class="active">Information</a>
       <div class="dropdown-menu" id="dropdown-menu">
-        <a href="information.html?topic=basal-cells"        data-topic="basal-cells">Airway basal cells</a>
-        <a href="information.html?topic=eb"                 data-topic="eb">Epidermolysis bullosa &amp; the airway</a>
-        <a href="information.html?topic=organoids"          data-topic="organoids">Airway organoids &amp; in vitro models</a>
-        <a href="information.html?topic=cell-gene-therapy"  data-topic="cell-gene-therapy">Cell &amp; gene therapy</a>
-        <a href="information.html?topic=regeneration"       data-topic="regeneration">Airway epithelial regeneration</a>
+        <a href="information.html?topic=basal-cells"        data-topic="basal-cells">Airway Basal Cells</a>
+        <a href="information.html?topic=eb"                 data-topic="eb">Epidermolysis Bullosa &amp; the Airway</a>
+        <a href="information.html?topic=organoids"          data-topic="organoids">Airway Organoids &amp; In Vitro Models</a>
+        <a href="information.html?topic=cell-gene-therapy"  data-topic="cell-gene-therapy">Cell &amp; Gene Therapy</a>
+        <a href="information.html?topic=regeneration"       data-topic="regeneration">Airway Epithelial Regeneration</a>
       </div>
     </div>
 
@@ -375,19 +376,19 @@
     <h2>Topics</h2>
     <ul class="sidebar-nav">
       <li>
-        <button class="active" data-topic="basal-cells">Airway basal cells</button>
+        <button class="active" data-topic="basal-cells">Airway Basal Cells</button>
       </li>
       <li>
-        <button data-topic="eb">Epidermolysis bullosa &amp; the airway</button>
+        <button data-topic="eb">Epidermolysis Bullosa &amp; the Airway</button>
       </li>
       <li>
-        <button data-topic="organoids">Airway organoids &amp; in vitro models</button>
+        <button data-topic="organoids">Airway Organoids &amp; In Vitro Models</button>
       </li>
       <li>
-        <button data-topic="cell-gene-therapy">Cell &amp; gene therapy for airway disease</button>
+        <button data-topic="cell-gene-therapy">Cell &amp; Gene Therapy for Airway Disease</button>
       </li>
       <li>
-        <button data-topic="regeneration">Airway epithelial regeneration in lung disease</button>
+        <button data-topic="regeneration">Airway Epithelial Regeneration in Lung Disease</button>
       </li>
     </ul>
   </aside>
@@ -396,7 +397,7 @@
   <main class="info-content">
 
     <!-- ════════════════════════════════
-         PANEL 1 — Airway basal cells
+         PANEL 1 — Airway Basal Cells
     ════════════════════════════════ -->
     <article class="info-panel active" id="panel-basal-cells"
       data-title="Airway Basal Cells | Stem Cells of the Respiratory Epithelium | EpiCENTR"
@@ -414,7 +415,7 @@
       <p>The human airway is lined by a pseudostratified epithelium — a single layer of cells of different heights that together form a continuous, protective barrier against inhaled pathogens and particulate matter. This barrier is not static. It is continuously maintained and, following injury or infection, actively repaired. The cells responsible for this regenerative capacity are airway basal cells.</p>
 
       <h2>What are airway basal cells?</h2>
-      <p>Basal cells are the stem cell population of the proximal airway epithelium, residing in direct contact with the basement membrane. They are characterised by expression of the tumor protein TP63 (p63) and structural proteins including keratin 5 (KRT5) and KRT14. In the pseudostratified epithelium of the nose, larynx, trachea and bronchi, basal cells constitute the major proliferative cell type.</p>
+      <p>Basal cells are the stem cell population of the proximal airway epithelium, residing in direct contact with the basement membrane. They are characterised by expression of the transcription factor TP63 (p63) and structural proteins including cytokeratin 5 (KRT5) and cytokeratin 14 (KRT14). In the pseudostratified epithelium of the nose, larynx, trachea and bronchi, basal cells constitute the major proliferative cell type.</p>
       <p>During normal tissue homeostasis, basal cells divide at a low rate to replenish the differentiated cells of the epithelium — primarily ciliated cells, which drive mucociliary clearance, and mucosecretory (goblet) cells, which produce the mucus layer. Following epithelial injury, basal cells expand rapidly and differentiate to restore barrier function. This capacity for self-renewal and multipotent differentiation is the defining property of a stem cell population.</p>
 
       <h2>Basal cell heterogeneity</h2>
@@ -433,7 +434,7 @@
     </article>
 
     <!-- ════════════════════════════════
-         PANEL 2 — Epidermolysis bullosa
+         PANEL 2 — Epidermolysis Bullosa
     ════════════════════════════════ -->
     <article class="info-panel" id="panel-eb"
       data-title="Epidermolysis Bullosa and Airway Disease | EB in Children | EpiCENTR"
@@ -509,7 +510,7 @@
     </article>
 
     <!-- ════════════════════════════════
-         PANEL 4 — Cell & gene therapy
+         PANEL 4 — Cell & Gene Therapy
     ════════════════════════════════ -->
     <article class="info-panel" id="panel-cell-gene-therapy"
       data-title="Cell and Gene Therapy for Airway Disease | Epithelial Regeneration | EpiCENTR"
