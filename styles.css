@@ -673,10 +673,13 @@ footer {
 <style>
 /* 2×2 category grid */
 .gallery-cat-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem 2rem;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem 2rem;
   margin-top: 2rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
  
 .gallery-cat-title {
