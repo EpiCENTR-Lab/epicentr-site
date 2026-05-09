@@ -598,7 +598,7 @@ html{
 .gallery-photo {
   display: block;
   width: 100%;
-  height: 200px;
+  height: 240px;
   object-fit: cover;
   transition: transform 0.25s ease;
 }
