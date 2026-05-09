@@ -670,7 +670,6 @@ footer {
   color: #777777;
 }
 
-<style>
 /* 2×2 category grid */
 .gallery-cat-grid {
   display: grid !important;
@@ -795,4 +794,3 @@ footer {
     height: 200px;
   }
 }
-</style>
