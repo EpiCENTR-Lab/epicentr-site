@@ -967,7 +967,7 @@
    // Auto-advance every 4 seconds, staggered by carousel index
     const index = Array.from(document.querySelectorAll('.gallery-carousel')).indexOf(carousel);
     setTimeout(function () {
-      setInterval(function () { goTo(current + 1); }, 4000);
+      setInterval(function () { goTo(current + 1); }, 8000);
     }, index * 1500);
   });
 })();
