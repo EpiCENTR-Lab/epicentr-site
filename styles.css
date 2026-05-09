@@ -669,3 +669,127 @@ footer {
   font-size: 14px;
   color: #777777;
 }
+
+<style>
+/* 2×2 category grid */
+.gallery-cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem 2rem;
+  margin-top: 2rem;
+}
+ 
+.gallery-cat-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4f3b78;
+  letter-spacing: 0.02em;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.10em;
+}
+ 
+/* Carousel wrapper */
+.gallery-carousel {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+}
+ 
+/* Sliding track */
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+ 
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+ 
+/* Reuse existing gallery photo styles */
+.carousel-slide .gallery-photo-wrap {
+  border-radius: 0; /* border-radius is on .gallery-carousel */
+}
+ 
+.carousel-slide .gallery-photo {
+  height: 240px;
+}
+ 
+/* Prev / Next buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.82);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  line-height: 1;
+  color: #4f3b78;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: background 0.15s ease, opacity 0.15s ease;
+  /* hide when only one slide */
+}
+ 
+.carousel-btn:hover { background: #fff; }
+ 
+.carousel-prev { left: 10px; }
+.carousel-next { right: 10px; }
+ 
+/* Hide buttons when carousel has only one slide */
+.gallery-carousel[data-single="true"] .carousel-btn {
+  display: none;
+}
+ 
+/* Dot indicators */
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 10;
+}
+ 
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+ 
+.carousel-dot.active {
+  background: #fff;
+  transform: scale(1.25);
+}
+ 
+/* Hide dots when only one slide */
+.gallery-carousel[data-single="true"] .carousel-dots {
+  display: none;
+}
+ 
+@media (max-width: 680px) {
+  .gallery-cat-grid {
+    grid-template-columns: 1fr;
+  }
+  .carousel-slide .gallery-photo {
+    height: 200px;
+  }
+}
+</style>
