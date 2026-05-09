@@ -964,8 +964,11 @@
     prevBtn.addEventListener('click', function () { goTo(current - 1); });
     nextBtn.addEventListener('click', function () { goTo(current + 1); });
  
-    // Auto-advance every 4 seconds
-    setInterval(function () { goTo(current + 1); }, 4000);
+   // Auto-advance every 4 seconds, staggered by carousel index
+    const index = Array.from(document.querySelectorAll('.gallery-carousel')).indexOf(carousel);
+    setTimeout(function () {
+      setInterval(function () { goTo(current + 1); }, 4000);
+    }, index * 1000);
   });
 })();
 </script>
