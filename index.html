@@ -478,10 +478,12 @@
 
 <script>
 (function () {
-  const authorQuery = '(Hynds, Robert E.[author] OR Hynds, Rob E.[author])';
-  const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])';
+  const authorQuery = '(Hynds RE[au] OR Hynds Robert E[au] OR Hynds Rob E[au])';
+  const researchQuery = authorQuery + ' NOT (Review[pt] OR Comment[pt] OR Editorial[pt])' +
+  ' NOT (correction[ti] OR corrigendum[ti] OR erratum[ti])' +
+  ' AND (airway[tiab] OR airways[tiab] OR respiratory[tiab] OR bronchial[tiab] OR tracheal[tiab] OR nasal[tiab] OR sinonasal[tiab] OR nasopharyngeal[tiab] OR laryngeal[tiab] OR "upper airway"[tiab] OR "Respiratory Mucosa"[mh] OR (airway[tiab] AND epitheli*[tiab]))' +
+  ' AND (epithelium[tiab] OR epithelial[tiab] OR epitheli*[tiab] OR basal cell*[tiab] OR stem cell*[tiab] OR progenitor*[tiab] OR ciliated[tiab] OR cilia[tiab] OR mucociliary[tiab] OR goblet[tiab] OR "Epithelial Cells"[mh])';
   const reviewQuery = authorQuery + ' AND (Review[pt] OR Comment[pt] OR Editorial[pt])';
-
   const panelQueries = {
     "pubmed-research": researchQuery,
     "pubmed-reviews": reviewQuery
@@ -512,12 +514,8 @@
 
     const overrides = {
       "erj open research": "ERJ Open Research",
-      "cancer cell": "Cancer Cell",
-      "nature genetics": "Nature Genetics",
-      "the new england journal of medicine": "New England Journal of Medicine",
       "journal of cell science": "Journal of Cell Science",
       "open biology": "Open Biology",
-      "science translational medicine": "Science Translational Medicine",
       "american journal of physiology. lung cellular and molecular physiology": "American Journal of Physiology (Lung Cellular and Molecular Physiology)",
       "frontiers in pharmacology": "Frontiers in Pharmacology",
       "american journal of respiratory cell and molecular biology": "American Journal of Respiratory Cell and Molecular Biology",
@@ -525,7 +523,8 @@
       "cytotherapy": "Cytotherapy",
       "science advances": "Science Advances",
       "european respiratory journal": "European Respiratory Journal",
-      "nature communications": "Nature Communications"
+      "nature communications": "Nature Communications",
+      "Journal of cystic fibrosis : official journal of the European Cystic Fibrosis Society": "Journal of Cystic Fibrosis"
     };
 
     return overrides[lower] || key;
