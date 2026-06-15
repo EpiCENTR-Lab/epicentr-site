@@ -96,7 +96,8 @@ body {
   z-index: 1001;
 }
 
-.nav-dropdown:hover .dropdown-menu {
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
   display: block;
 }
 
@@ -112,6 +113,13 @@ body {
 .dropdown-menu a:hover {
   background: rgba(79, 59, 120, 0.08);
   border-radius: 8px;
+}
+
+.nav-dropdown > a::after {
+  content: "▾";
+  font-size: 10px;
+  opacity: 0.6;
+  margin-left: 3px;
 }
 
 /* HERO */
