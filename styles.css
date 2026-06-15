@@ -349,19 +349,27 @@ body {
 
 .alumni-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(180px, 1fr));
-  gap: 42px 28px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  justify-items: center;
+}
+
+@media (max-width: 900px) {
+  .alumni-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 560px) {
   .alumni-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px 20px;
+    gap: 1.5rem 1rem;
   }
 
-  .alumni-grid .person-photo {
-    width: 120px;
-    height: 120px;
+  .alumni-photo,
+  .alumni-photo-wrap {
+    width: 100px;
+    height: 100px;
   }
 }
 
@@ -790,7 +798,6 @@ footer {
 
 @media (max-width: 560px) {
   .people-grid,
-  .alumni-grid {
     grid-template-columns: 1fr;
   }
 
