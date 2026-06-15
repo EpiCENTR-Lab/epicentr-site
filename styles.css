@@ -797,9 +797,25 @@ footer {
 }
 
 @media (max-width: 560px) {
-  .people-grid,
-    grid-template-columns: 1fr;
+
+  .people-grid:not(.alumni-grid) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
   }
+
+  .people-grid:not(.alumni-grid) .person-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .people-grid:not(.alumni-grid) .person-name {
+    font-size: 15px;
+  }
+
+  .people-grid:not(.alumni-grid) .person-role {
+    font-size: 13px;
+  }
+}
 
   .hero h1 {
     font-size: 34px;
