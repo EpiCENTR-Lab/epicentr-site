@@ -721,8 +721,29 @@ html{
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-  .gallery-cat-grid {
+   .gallery-cat-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .nav{
+    flex-direction:column;
+    padding:20px;
+  }
+
+  .nav-left{
+    margin-bottom:16px;
+  }
+
+  .nav-right{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:18px;
+  }
+
+  .nav-right a{
+    margin:0;
+    font-size:13px;
   }
 }
 
