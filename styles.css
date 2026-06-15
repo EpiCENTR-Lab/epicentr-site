@@ -9,6 +9,25 @@ body {
 
 /* NAVIGATION */
 
+.logo-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+}
+
+.logo-icon{
+  width:28px;
+  height:28px;
+  display:block;
+}
+
+.logo-link span{
+  font-weight:600;
+  letter-spacing:0.06em;
+  color:#4f3b78;
+}
+
 .nav{
   position:sticky;
   top:0;
