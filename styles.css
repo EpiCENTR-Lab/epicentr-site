@@ -349,9 +349,20 @@ body {
 
 .alumni-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  justify-items: center;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 42px 28px;
+}
+
+@media (max-width: 560px) {
+  .alumni-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 20px;
+  }
+
+  .alumni-grid .person-photo {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 .alumni-card {
