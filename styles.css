@@ -821,10 +821,11 @@ footer {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 12px;
   }
-
-  .people-grid:not(.alumni-grid) .person-photo {
-    width: 100px;
-    height: 100px;
+  
+  .people-grid:not(.alumni-grid) .person-photo,
+  .people-grid:not(.alumni-grid) .person-photo-wrap {
+    width: 120px;
+    height: 120px;
   }
 
   .people-grid:not(.alumni-grid) .person-name {
