@@ -356,7 +356,7 @@ body {
 
 @media (max-width: 900px) {
   .alumni-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
