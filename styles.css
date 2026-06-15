@@ -281,14 +281,17 @@ body {
   border-radius: 50%;
   display: block;
   margin: 0 auto 16px;
-  border: 2px solid #d9d4e5;
-  padding: 4px;
-  box-sizing: border-box;
 }
 
 .person-photo-wrap {
   position: relative;
   margin: 0 auto 16px;
+}
+
+.people-grid:not(.alumni-grid) .person-photo {
+  border: 2px solid #d9d4e5;
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .person-name {
