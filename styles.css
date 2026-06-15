@@ -275,6 +275,11 @@ body {
   height: 160px;
 }
 
+.person-photo-wrap {
+  position: relative;
+  margin: 0 auto 16px;
+}
+
 .person-photo {
   object-fit: cover;
   object-position: center;
@@ -283,15 +288,13 @@ body {
   margin: 0 auto 16px;
 }
 
-.person-photo-wrap {
-  position: relative;
-  margin: 0 auto 16px;
-}
-
-.people-grid:not(.alumni-grid) .person-photo {
+.person-photo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
   border: 2px solid #d9d4e5;
-  padding: 4px;
-  box-sizing: border-box;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .person-name {
@@ -307,7 +310,8 @@ body {
   color: #3f8f8c;
 }
 
-.person-overlay {
+.person-overlay,
+.alumni-destination {
   position: absolute;
   inset: 0;
   display: flex;
@@ -324,7 +328,8 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.person-photo-wrap:hover .person-overlay {
+.person-photo-wrap:hover .person-overlay,
+.alumni-photo-wrap:hover .alumni-destination {
   opacity: 1;
 }
 
@@ -360,19 +365,6 @@ body {
   justify-items: center;
 }
 
-@media (max-width: 900px) {
-  .alumni-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 560px) {
-  .alumni-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem 1rem;
-  }
-}
-
 .alumni-card {
   max-width: 180px;
   text-align: center;
@@ -403,24 +395,7 @@ body {
 }
 
 .alumni-destination {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
   font-size: 0.8rem;
-  line-height: 1.2;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.alumni-photo-wrap:hover .alumni-destination {
-  opacity: 1;
 }
 
 .alumni-name {
@@ -431,6 +406,50 @@ body {
 .alumni-role {
   font-size: 0.82rem;
   color: #3f8f8c;
+}
+
+/* PEOPLE RESPONSIVE */
+
+@media (max-width: 900px) {
+  .people-grid:not(.alumni-grid) {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+
+  .alumni-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .people-grid:not(.alumni-grid) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 14px;
+  }
+
+  .people-grid:not(.alumni-grid) .person-photo,
+  .people-grid:not(.alumni-grid) .person-photo-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .alumni-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+  }
+
+  .alumni-photo,
+  .alumni-photo-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .people-grid:not(.alumni-grid) .person-name {
+    font-size: 15px;
+  }
+
+  .people-grid:not(.alumni-grid) .person-role {
+    font-size: 13px;
+  }
 }
 
 /* PUBLICATIONS */
