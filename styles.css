@@ -496,16 +496,6 @@ html{
     grid-template-columns: 1fr;
   }
 
-  .nav {
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .nav-right a {
-    margin: 0 12px;
-  }
-}
-
 .resources-intro {
   max-width: 720px;
   margin: 0 auto 2rem;
@@ -551,8 +541,6 @@ html{
 .resource-link:hover {
   border-bottom-color: #3f8f8c;
 }
-
-/* GALLERY */
 
 /* GALLERY */
 
