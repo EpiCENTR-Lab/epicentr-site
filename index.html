@@ -101,30 +101,34 @@
 
 <header class="nav">
   <div class="nav-left">
-  <a href="#top" class="logo-link">
-    <img src="favicon.png" alt="EpiCENTR logo" class="logo-icon">
-    <span>EpiCENTR Lab</span>
-  </a>
-</div>
+    <a href="#top" class="logo-link">
+      <img src="favicon.png" alt="EpiCENTR logo" class="logo-icon">
+      <span>EpiCENTR Lab</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Open navigation" type="button">
+      ☰
+    </button>
+  </div>
+
   <nav class="nav-right">
     <a href="#research">Research</a>
     <a href="#people">The Team</a>
     <a href="#publications">Publications</a>
     <a href="#resources">Resources</a>
     <a href="#gallery">Gallery</a>
-<div class="nav-dropdown">
-  <a href="information.html">Information</a>
-  <div class="dropdown-menu">
-      <a href="airway-basal-cells.html">Airway basal cells</a>
-      <a href="airway-epithelial-regeneration.html">Airway epithelial regeneration</a>
-      <a href="airway-organoids.html">Airway organoids &amp; <i>in vitro</i> models</a> 
-      <a href="cell-gene-therapy.html">Cell &amp; gene therapy</a>
-      <a href="epidermolysis-bullosa.html">Epidermolysis bullosa &amp; the airway</a>
-  </div>
-</div>
 
-<a href="#contact">Contact</a>
-    </nav>
+    <div class="nav-dropdown">
+      <a href="information.html">Information</a>
+      <div class="dropdown-menu">
+        <a href="airway-basal-cells.html">Airway basal cells</a>
+        <a href="airway-epithelial-regeneration.html">Airway epithelial regeneration</a>
+        <a href="airway-organoids.html">Airway organoids &amp; <i>in vitro</i> models</a>
+        <a href="cell-gene-therapy.html">Cell &amp; gene therapy</a>
+        <a href="epidermolysis-bullosa.html">Epidermolysis bullosa &amp; the airway</a>
+      </div>
+    </div>
+  </nav>
 </header>
 
 <section id="top" class="hero">
@@ -975,6 +979,12 @@
     }, index * 1500);
   });
 })();
+</script>
+
+<script>
+  document.querySelector(".nav-toggle").addEventListener("click", function () {
+    document.querySelector(".nav-right").classList.toggle("open");
+  });
 </script>
   
 </body>
