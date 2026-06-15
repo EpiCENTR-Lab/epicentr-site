@@ -474,11 +474,6 @@ html{
 
 /* RESPONSIVE */
 
-  .nav {
-    padding: 24px 24px;
-  }
-}
-
 @media (max-width: 650px) {
   .pub-row {
     flex-direction: column;
